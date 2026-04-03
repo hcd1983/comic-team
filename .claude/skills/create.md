@@ -87,7 +87,9 @@
 ### 步驟 2.5：角色設定圖
 
 1. 讀取 `output/story-outline.json` 的 `characters` 陣列
-2. 為每個角色呼叫 `gemini_draw` 生成設定圖（正面全身 + 表情差分）
+2. 為每個角色呼叫 `gemini_draw` 生成設定圖：
+   - 正面全身圖（aspectRatio: 3:4, imageSize: 2K）
+   - 每個表情獨立一張（aspectRatio: 1:1, referenceImages: 正面全身圖）
 3. 逐角色呈現給使用者審核：確認 / 重新生成 / 調整描述後重新生成
 4. 所有角色確認後，將圖片路徑寫入 story-outline.json 的 `referenceImages` 欄位
 5. 告知使用者：
@@ -138,10 +140,13 @@
 
 1. 讀取 `output/storyboard.json`
 2. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
-   - prompt 組合順序：畫風描述 → 鏡頭角度 → 畫面描述 → 情緒氛圍 → 對白氣泡說明（若有）
+   - prompt：精簡 150-200 字（畫風 + 角色外觀 tag + 動作表情 + 場景關鍵元素）
+   - `aspectRatio`：從分鏡取得（如 16:9, 3:4, 9:16）
+   - `imageSize`：從分鏡取得（預設 2K）
+   - `referenceImages`：角色設定圖路徑（每格都傳，維持角色一致性）
    - 輸出路徑：`output/page{頁碼}_panel{格號}.png`
    - 每格完成後立即回報：`✓ 第 N 格完成：output/page1_panelN.png`
-   - 每格生成後執行品質閘門檢查（圖文一致性、跨格一致性、文字殘留）
+   - 每格生成後執行品質閘門檢查（圖文一致性、跨格一致性、文字殘留、構圖比例）
    - FAIL 自動修改 prompt 重新生成（最多 2 次）
    - API 失敗自動重試 1 次；仍失敗則記錄並繼續下一格
 3. 全部完成後，列出所有生成結果：
