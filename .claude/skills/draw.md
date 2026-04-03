@@ -11,14 +11,14 @@
 ## 流程
 
 1. 讀取 `output/storyboard.json`
-2. 可選：詢問使用者畫風偏好（預設：日系漫畫風格，黑白線稿，清晰的線條）
-3. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
-   - **Prompt 組合順序**：
-     1. 畫風描述（使用者指定或預設）
-     2. 鏡頭角度（來自分鏡 cameraAngle）
-     3. 畫面描述（來自分鏡 description）
-     4. 情緒氛圍（來自分鏡 emotion）
-     5. 對白氣泡說明（若 dialogue 不為空，加入「畫面中包含文字氣泡，內容為：XXX」）
+2. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
+   - **Prompt 來源**：直接使用分鏡師產出的 `promptTemplate`，按順序拼接為完整 prompt：
+     1. `stylePrefix`（畫風 + **no text, no speech bubbles, no dialogue, no words, no letters, no sound effects**）
+     2. `composition`（構圖指令）
+     3. `scene`（場景描述，引用自 story-outline.json）
+     4. `characters`（角色完整外觀描述 + 位置姿態，引用自 story-outline.json）
+     5. `mood`（情緒氛圍）
+   - **不要在 prompt 中加入任何對白或文字內容**，對白由後製處理
    - **輸出路徑**：`output/page{頁碼}_panel{格號}.png`
    - 每格完成後立即回報進度
    - **失敗處理**：自動重試 1 次，仍失敗則記錄錯誤並繼續下一格
