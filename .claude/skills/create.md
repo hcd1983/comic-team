@@ -49,13 +49,32 @@
   "theme": "使用者原始主題",
   "synopsis": "100 字以內的故事摘要",
   "characters": [
-    { "name": "角色名", "description": "外貌與性格簡述" }
+    {
+      "id": "角色 ID（英文）",
+      "name": "角色名",
+      "personality": "性格描述與行為特徵",
+      "appearance": "外觀細節（髮型、髮色、五官、膚色、體型）",
+      "outfit": "服裝描述（款式、顏色、配件）",
+      "expressions": {
+        "default": "預設表情的精確描述",
+        "表情名稱": "該表情的精確描述"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "場景 ID（英文）",
+      "description": "場景視覺描述（色調、光源方向、主要物件配置）"
+    }
   ],
   "plotPoints": [
-    "起：場景描述",
-    "承：發展描述",
-    "轉：轉折描述",
-    "合：結局描述"
+    {
+      "beat": "起 / 承 / 轉 / 合",
+      "scene": "場景 ID",
+      "characters": ["角色 ID"],
+      "event": "具體事件描述",
+      "emotion_target": "預期讀者情緒反應"
+    }
   ],
   "tone": "搞笑 / 熱血 / 溫馨 / 懸疑",
   "format": "single-page | four-panel",
