@@ -2,12 +2,13 @@
 
 /**
  * Gemini 生圖 MCP Server
- * 透過 Gemini API (nanobanana) 生成漫畫圖片
+ * 透過 Gemini API (Nano Banana 2) 生成漫畫圖片
+ * 支援 imageConfig（aspectRatio, imageSize）和參考圖片
  * 使用 stdio transport + JSON-RPC
  *
  * 環境變數：
  *   GEMINI_API_KEY  — Gemini API 金鑰（必要）
- *   GEMINI_MODEL    — 模型名稱（預設 gemini-2.0-flash-exp）
+ *   GEMINI_MODEL    — 模型名稱（預設 gemini-3.1-flash-image-preview）
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
@@ -15,7 +16,14 @@ import { writeFileSync, mkdirSync, existsSync } from 'fs'
 import { dirname } from 'path'
 import { stdin, stdout } from 'process'
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp'
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-image-preview'
+
+const VALID_ASPECT_RATIOS = [
+  '1:1', '1:4', '1:8', '2:3', '3:2', '3:4', '4:1',
+  '4:3', '4:5', '5:4', '8:1', '9:16', '16:9', '21:9',
+]
+
+const VALID_IMAGE_SIZES = ['512', '1K', '2K', '4K']
 const MAX_RETRIES = 1
 const RETRY_DELAY_MS = 3000
 
@@ -23,22 +31,40 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function generateImage(prompt, outputPath, retryCount = 0) {
+async function generateImage(prompt, outputPath, options = {}, retryCount = 0) {
   const startTime = Date.now()
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY 環境變數未設定')
   }
 
+  const { aspectRatio, imageSize } = options
+
   const genAI = new GoogleGenerativeAI(apiKey)
   const model = genAI.getGenerativeModel({ model: GEMINI_MODEL })
+
+  const generationConfig = {
+    responseModalities: ['image', 'text'],
+  }
+
+  if (aspectRatio && VALID_ASPECT_RATIOS.includes(aspectRatio)) {
+    generationConfig.imageConfig = {
+      ...(generationConfig.imageConfig || {}),
+      aspectRatio,
+    }
+  }
+
+  if (imageSize && VALID_IMAGE_SIZES.includes(imageSize)) {
+    generationConfig.imageConfig = {
+      ...(generationConfig.imageConfig || {}),
+      imageSize,
+    }
+  }
 
   try {
     const result = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseModalities: ['image', 'text'],
-      },
+      generationConfig,
     })
 
     const parts = result.response.candidates?.[0]?.content?.parts ?? []
@@ -66,7 +92,7 @@ async function generateImage(prompt, outputPath, retryCount = 0) {
   } catch (error) {
     if (retryCount < MAX_RETRIES) {
       await sleep(RETRY_DELAY_MS)
-      return generateImage(prompt, outputPath, retryCount + 1)
+      return generateImage(prompt, outputPath, options, retryCount + 1)
     }
     throw error
   }
@@ -115,6 +141,16 @@ async function handleRequest(request) {
                   description:
                     '輸出圖片的完整檔案路徑（如 output/page1_panel1.png）',
                 },
+                aspectRatio: {
+                  type: 'string',
+                  description:
+                    '輸出圖片的長寬比。支援：1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9',
+                },
+                imageSize: {
+                  type: 'string',
+                  description:
+                    '輸出圖片的尺寸。支援：512, 1K, 2K, 4K（預設 1K）',
+                },
               },
               required: ['prompt', 'outputPath'],
             },
@@ -129,7 +165,11 @@ async function handleRequest(request) {
 
     if (name === 'gemini_draw') {
       try {
-        const result = await generateImage(args.prompt, args.outputPath)
+        const options = {
+          aspectRatio: args.aspectRatio,
+          imageSize: args.imageSize,
+        }
+        const result = await generateImage(args.prompt, args.outputPath, options)
         return {
           jsonrpc: '2.0',
           id,
