@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "gemini-draw": {
+      "command": "node",
+      "args": ["scripts/gemini-draw.mjs"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+        "GEMINI_MODEL": "${GEMINI_MODEL}"
+      }
+    }
+  }
+}

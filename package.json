@@ -1,0 +1,12 @@
+{
+  "name": "comic-team",
+  "version": "1.0.0",
+  "description": "漫畫團隊協作系統 — AI 編劇討論 + 分鏡 + Gemini 繪圖",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}
