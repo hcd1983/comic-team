@@ -12,9 +12,27 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { writeFileSync, mkdirSync, existsSync } from 'fs'
-import { dirname } from 'path'
+import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'fs'
+import { dirname, extname } from 'path'
 import { stdin, stdout } from 'process'
+
+const MIME_TYPES = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+}
+
+function loadImageAsInlineData(imagePath) {
+  if (!existsSync(imagePath)) {
+    throw new Error(`參考圖片不存在：${imagePath}`)
+  }
+  const ext = extname(imagePath).toLowerCase()
+  const mimeType = MIME_TYPES[ext] || 'image/png'
+  const data = readFileSync(imagePath).toString('base64')
+  return { inlineData: { mimeType, data } }
+}
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-image-preview'
 
@@ -38,7 +56,7 @@ async function generateImage(prompt, outputPath, options = {}, retryCount = 0) {
     throw new Error('GEMINI_API_KEY 環境變數未設定')
   }
 
-  const { aspectRatio, imageSize } = options
+  const { aspectRatio, imageSize, referenceImages } = options
 
   const genAI = new GoogleGenerativeAI(apiKey)
   const model = genAI.getGenerativeModel({ model: GEMINI_MODEL })
@@ -62,8 +80,16 @@ async function generateImage(prompt, outputPath, options = {}, retryCount = 0) {
   }
 
   try {
+    const contentParts = [{ text: prompt }]
+
+    if (referenceImages && Array.isArray(referenceImages)) {
+      for (const imagePath of referenceImages) {
+        contentParts.push(loadImageAsInlineData(imagePath))
+      }
+    }
+
     const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      contents: [{ role: 'user', parts: contentParts }],
       generationConfig,
     })
 
@@ -151,6 +177,12 @@ async function handleRequest(request) {
                   description:
                     '輸出圖片的尺寸。支援：512, 1K, 2K, 4K（預設 1K）',
                 },
+                referenceImages: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description:
+                    '參考圖片的檔案路徑陣列（如角色設定圖），最多 14 張。模型會參考這些圖片來維持角色一致性。',
+                },
               },
               required: ['prompt', 'outputPath'],
             },
@@ -168,6 +200,7 @@ async function handleRequest(request) {
         const options = {
           aspectRatio: args.aspectRatio,
           imageSize: args.imageSize,
+          referenceImages: args.referenceImages,
         }
         const result = await generateImage(args.prompt, args.outputPath, options)
         return {
