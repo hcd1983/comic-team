@@ -5,6 +5,10 @@
 ## 流程
 
 1. 詢問使用者故事主題或大綱（若未提供）
+1.5. 讀取素材包（若存在）：
+   - 若 `output/material-pack.json` 存在，讀取並在討論前呈現摘要（topInsights、avoidList、suggestedAngles）
+   - 若不存在，提示使用者可先執行 `/research` 搜集素材，或直接跳過進入討論
+   - 素材包的內容會作為 context 傳給每位編劇，讓他們在討論時引用
 2. 進行多輪討論：
    - 呼叫 `scriptwriter-a`（阿龍），傳入主題（及前面所有討論紀錄）
    - 呼叫 `scriptwriter-b`（小雪），傳入主題 + 阿龍本輪發言（及前面所有討論紀錄）
