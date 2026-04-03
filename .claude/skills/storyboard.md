@@ -13,7 +13,9 @@
 2. 詢問漫畫格式（若未指定）：
    - **單頁漫畫**（4-6 格）
    - **四格漫畫**（固定 4 格：起承轉合）
-3. 呼叫 `storyboard` agent，傳入 story-outline.json 的完整內容與漫畫格式
+3. 呼叫 `storyboard` agent，傳入 story-outline.json 的完整內容（含 characters、scenes）與漫畫格式
+   - 分鏡師會為每格生成 `promptTemplate`，這是給 AI 生圖用的結構化 prompt
+   - `promptTemplate` 會引用 story-outline.json 的 characters 和 scenes，確保跨格一致性
 4. 以視覺化格式呈現分鏡結果：
 
 ```
@@ -24,13 +26,17 @@
     畫面：（畫面描述）
     對白：「對白內容」
     情緒：緊張
+    Prompt：（promptTemplate 組裝後的完整 prompt 預覽）
 
   【第 2 格】標準
     鏡頭：特寫
     畫面：（畫面描述）
     對白：
     情緒：驚訝
+    Prompt：（promptTemplate 組裝後的完整 prompt 預覽）
 ```
+
+**注意**：prompt 預覽讓使用者在分鏡階段就能確認生圖指令是否正確，避免進入作畫階段才發現問題。
 
 5. 請使用者選擇：
    - **確認** → 儲存至 `output/storyboard.json`，完成
