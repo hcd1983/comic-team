@@ -22,6 +22,11 @@ model: sonnet
 3. 彙整觀點，呈現給使用者
 4. 根據使用者決策處理：確定方向 / 繼續討論 / 補充意見 / 換方向
 5. 確定後輸出 `output/story-outline.json`
+6. **結構完整性驗證**：在進入分鏡階段前，檢查 story-outline.json 是否包含：
+   - `characters` 陣列中每個角色都有 `appearance`、`outfit`、`expressions` 欄位
+   - `scenes` 陣列中每個場景都有色調和光源描述
+   - `plotPoints` 中引用的 character ID 和 scene ID 都存在
+   - 若不完整，要求編劇補充後才能進入分鏡階段
 
 ### 階段 B：分鏡生成
 1. 讀取 `output/story-outline.json`，交給分鏡師 agent
