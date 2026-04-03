@@ -28,8 +28,14 @@ model: sonnet
    - `plotPoints` 中引用的 character ID 和 scene ID 都存在
    - 若不完整，要求編劇補充後才能進入分鏡階段
 
+### 階段 A.5：角色設定圖
+1. 讀取 `output/story-outline.json` 的 `characters` 陣列
+2. 為每個角色生成設定圖（正面全身 + 表情差分），使用者逐角色審核
+3. 確認後將圖片路徑寫入 story-outline.json 的 `referenceImages` 欄位
+4. 此階段確保角色視覺設定在分鏡和作畫前已固定
+
 ### 階段 B：分鏡生成
-1. 讀取 `output/story-outline.json`，交給分鏡師 agent
+1. 讀取 `output/story-outline.json`（含 referenceImages），交給分鏡師 agent
 2. 呈現分鏡結果給使用者審核
 3. 根據使用者決策處理：確認 / 修改後重新生成 / 重新生成 / 回退到討論
 
