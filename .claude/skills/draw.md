@@ -18,15 +18,19 @@
 
 ## 流程
 
-1. 讀取 `output/storyboard.json`
-2. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
-   - **Prompt 來源**：直接使用分鏡師產出的 `promptTemplate`，按順序拼接為完整 prompt：
+1. 讀取 `output/storyboard.json` 和 `output/story-outline.json`
+2. 收集角色參考圖：從 story-outline.json 的 characters 中提取所有 `referenceImages` 路徑
+3. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
+   - **Prompt 來源**：直接使用分鏡師產出的 `promptTemplate`，按順序拼接為完整 prompt（**控制在 150-200 字以內**）：
      1. `stylePrefix`（畫風 + **no text, no speech bubbles, no dialogue, no words, no letters, no sound effects**）
-     2. `composition`（構圖指令）
-     3. `scene`（場景描述，引用自 story-outline.json）
-     4. `characters`（角色完整外觀描述 + 位置姿態，引用自 story-outline.json）
-     5. `mood`（情緒氛圍）
-   - **不要在 prompt 中加入任何對白或文字內容**，對白由後製處理
+     2. `composition`（構圖指令，不要寫百分比）
+     3. `scene`（場景關鍵元素，精簡描述）
+     4. `characters`（角色核心外觀 + 動作表情，用 tag 串而非完整句子）
+   - **不要在 prompt 中加入 mood 抒情描述**，也不要加對白或文字內容
+   - **必傳參數**：
+     - `aspectRatio`：從分鏡的 `aspectRatio` 欄位取得（如 `3:4`、`16:9`、`9:16`）
+     - `imageSize`：從分鏡的 `imageSize` 欄位取得（預設 `2K`）
+     - `referenceImages`：角色設定圖路徑陣列（每格都傳，維持角色一致性）
    - **輸出路徑**：`output/page{頁碼}_panel{格號}.png`
    - 每格完成後立即回報進度
    - **品質閘門**：每格生成後執行品質檢查（參照 /quality-gate）：
