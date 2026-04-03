@@ -11,23 +11,18 @@
 
 1. 讀取 `output/story-outline.json` 的 `characters` 陣列
 2. 為每個角色生成設定圖：
-   - **正面全身圖**：呼叫 `gemini_draw`，prompt 組合：
-     ```
-     Character design sheet. [style from story-outline].
-     Full body front view, standing pose, white background, no text, no speech bubbles.
-     [character.appearance]. [character.outfit].
-     Expression: [character.expressions.default].
-     ```
-   - **表情差分圖**：呼叫 `gemini_draw`，prompt 組合：
-     ```
-     Character expression sheet. [style from story-outline].
-     Multiple facial expressions of the same character on white background, no text, no labels.
-     [character.appearance].
-     Expressions: [列出 character.expressions 的所有表情描述].
-     ```
+   - **正面全身圖**：呼叫 `gemini_draw`，參數：
+     - prompt：`Character design sheet. [style]. Full body front view, standing pose, white background, no text, no speech bubbles. [appearance]. [outfit]. Expression: [default expression].`
+     - `aspectRatio`: `3:4`（直立全身最適合）
+     - `imageSize`: `2K`
+   - **表情差分圖**：為每個表情**獨立生成一張圖**（不要擠在同一張），參數：
+     - prompt：`Character portrait, [style], white background, no text. [appearance]. Expression: [具體表情描述].`
+     - `aspectRatio`: `1:1`
+     - `imageSize`: `1K`
+     - `referenceImages`: 傳入剛生成的正面全身圖作為參考，維持角色一致性
    - 輸出路徑：
      - `output/characters/{character.id}_front.png`
-     - `output/characters/{character.id}_expressions.png`
+     - `output/characters/{character.id}_expr_{表情名}.png`
 3. 逐個角色呈現設定圖給使用者審核：
 
 ```
