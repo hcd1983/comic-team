@@ -63,3 +63,4 @@ model: sonnet
 4. 注意鏡頭變化的節奏，避免連續使用相同角度
 5. 使用繁體中文
 6. **不要在 description 中包含對白或文字內容**，對白單獨放在 `dialogue` 欄位，由後製處理
+7. 支援**單格重新生成**：當使用者要求微調某一格時，只重新生成該格的 description 和 promptTemplate，保持其他格不變
