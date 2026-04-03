@@ -35,7 +35,9 @@ model: sonnet
             "scene": "引用 story-outline.json 的 scenes 描述",
             "characters": "引用 story-outline.json 的 characters（appearance + outfit + 指定 expression），加上畫面中的位置與姿態",
             "mood": "情緒氛圍關鍵字"
-          }
+          },
+          "aspectRatio": "此格的輸出圖片比例（如 3:4, 4:3, 16:9, 9:16）",
+          "imageSize": "輸出解析度（預設 2K）"
         }
       ]
     }
@@ -53,7 +55,11 @@ model: sonnet
 4. **characters**：從 story-outline.json 的 `characters` 引用 `appearance` + `outfit` + 指定 `expression`，加上「位於畫面{位置}，{具體姿態}」
 5. **mood**：情緒氛圍關鍵字
 
-**重要**：`characters` 欄位必須每格都完整引用角色的外觀和服裝描述，不能只寫角色名字，這是確保跨格角色一致性的關鍵。
+**重要**：
+- `characters` 欄位必須每格都完整引用角色的外觀和服裝描述，不能只寫角色名字，這是確保跨格角色一致性的關鍵。
+- `aspectRatio` 必須根據 layoutHint 選擇合適的比例：橫幅用 `16:9` 或 `21:9`，標準用 `3:4` 或 `4:3`，窄長直條用 `9:16`，正方用 `1:1`。
+- `imageSize` 預設使用 `2K`，角色設定圖可用 `1K`。
+- **prompt 長度控制在 150-200 英文字以內**，砍掉 mood 抒情描述和百分比構圖指示，只保留：畫風 + 角色核心外觀 + 動作表情 + 場景關鍵元素。
 
 ## 分鏡原則
 
