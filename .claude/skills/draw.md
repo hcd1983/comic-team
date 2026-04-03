@@ -22,7 +22,34 @@
    - **輸出路徑**：`output/page{頁碼}_panel{格號}.png`
    - 每格完成後立即回報進度
    - **失敗處理**：自動重試 1 次，仍失敗則記錄錯誤並繼續下一格
-4. 全部完成後，列出所有結果：
+3. 全部完成後，產出後製文字清單並儲存至 `output/dialogue-overlay.json`：
+
+```json
+{
+  "pages": [
+    {
+      "pageNumber": 1,
+      "panels": [
+        {
+          "panelNumber": 1,
+          "imagePath": "output/page1_panel1.png",
+          "dialogues": [
+            {
+              "speaker": "說話者名稱",
+              "text": "對白內容",
+              "position": "上方 / 下方 / 左上 / 右上 / 左下 / 右下",
+              "style": "normal / shout / whisper / thought"
+            }
+          ],
+          "soundEffects": []
+        }
+      ]
+    }
+  ]
+}
+```
+
+4. 列出所有結果與後製文字清單：
 
 ```
 ═══ 作畫完成 ═══
@@ -30,6 +57,13 @@
 ✓ 第 2 格：output/page1_panel2.png
 ✗ 第 3 格：生成失敗（原因）
 ✓ 第 4 格：output/page1_panel4.png
+
+═══ 後製文字清單 ═══
+第 1 格：同事：「阿靜～早安！」(右上, normal)
+第 2 格：內心小人：「緊急狀況！！」(中央, shout)
+...
+
+後製文字資訊已儲存至 output/dialogue-overlay.json
 ```
 
 5. 請使用者選擇：
