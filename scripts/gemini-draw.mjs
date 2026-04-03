@@ -24,6 +24,7 @@ function sleep(ms) {
 }
 
 async function generateImage(prompt, outputPath, retryCount = 0) {
+  const startTime = Date.now()
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY 環境變數未設定')
@@ -56,6 +57,7 @@ async function generateImage(prompt, outputPath, retryCount = 0) {
           path: outputPath,
           size: buffer.length,
           retries: retryCount,
+          durationMs: Date.now() - startTime,
         }
       }
     }

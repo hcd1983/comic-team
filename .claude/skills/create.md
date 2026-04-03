@@ -162,13 +162,39 @@
 
 ### 步驟 5：完成
 
+1. 儲存流程指標至 `output/metrics.json`：
+
+```json
+{
+  "episodeId": "ep01",
+  "createdAt": "2026-04-03T...",
+  "research": { "durationMs": 120000, "materialsCount": 15 },
+  "discuss": { "rounds": 2, "proposalCount": 3 },
+  "characterDesign": { "characters": 2, "regenerations": 1 },
+  "storyboard": { "revisions": 1, "panelAdjustments": 0 },
+  "draw": {
+    "panels": [
+      { "panel": 1, "attempts": 1, "durationMs": 15000, "qualityGate": "PASS" },
+      { "panel": 2, "attempts": 2, "durationMs": 35000, "qualityGate": "WARN" }
+    ],
+    "totalDurationMs": 120000
+  }
+}
+```
+
+2. 列出最終產出：
+
 ```
 ═══ 漫畫創作完成！ ═══
 故事大綱：output/story-outline.json
+素材包：  output/material-pack.json
+角色設定：output/characters/
 分鏡腳本：output/storyboard.json
 漫畫圖片：
   - output/page1_panel1.png
   - output/page1_panel2.png
   - output/page1_panel3.png
   - output/page1_panel4.png
+後製文字：output/dialogue-overlay.json
+流程指標：output/metrics.json
 ```
