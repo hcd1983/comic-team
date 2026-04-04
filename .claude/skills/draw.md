@@ -4,7 +4,7 @@
 
 ## 前置條件
 
-- 需要 `output/storyboard.json`（來自 /storyboard），或當前對話中已有確認的分鏡結果
+- 需要 `output/{slug}/{version}/storyboard.json`（來自 /storyboard），或當前對話中已有確認的分鏡結果
 - 若檔案不存在，提示使用者先執行 `/storyboard`
 - 環境變數 `GEMINI_API_KEY` 必須已設定
 
@@ -18,7 +18,7 @@
 
 ## 流程
 
-1. 讀取 `output/storyboard.json` 和 `output/story-outline.json`
+1. 讀取 `output/{slug}/{version}/storyboard.json` 和 `output/{slug}/{version}/story-outline.json`
 2. 收集角色參考圖：從 story-outline.json 的 characters 中提取所有 `referenceImages` 路徑
 3. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
    - **Prompt 來源**：直接使用分鏡師產出的 `promptTemplate`，按順序拼接為完整 prompt（**控制在 150-200 字以內**）：
@@ -31,7 +31,7 @@
      - `aspectRatio`：從分鏡的 `aspectRatio` 欄位取得（如 `3:4`、`16:9`、`9:16`）
      - `imageSize`：從分鏡的 `imageSize` 欄位取得（預設 `2K`）
      - `referenceImages`：角色設定圖路徑陣列（每格都傳，維持角色一致性）
-   - **輸出路徑**：`output/page{頁碼}_panel{格號}.png`
+   - **輸出路徑**：`output/{slug}/{version}/pages/p{頁碼}_panel{格號}.png`
    - 每格完成後立即回報進度
    - **品質閘門**：每格生成後執行品質檢查（參照 /quality-gate）：
      - 讀取圖片，檢查圖文一致性、跨格一致性、文字殘留
@@ -39,7 +39,7 @@
      - WARN → 提示問題但繼續
      - FAIL → 修改 prompt 後自動重新生成（最多 2 次），仍失敗標記 `MANUAL_REVIEW`
    - **失敗處理**：API 失敗自動重試 1 次，仍失敗則記錄錯誤並繼續下一格
-3. 全部完成後，產出後製文字清單並儲存至 `output/dialogue-overlay.json`：
+3. 全部完成後，產出後製文字清單並儲存至 `output/{slug}/{version}/dialogue-overlay.json`：
 
 ```json
 {
@@ -80,7 +80,7 @@
 第 2 格：內心小人：「緊急狀況！！」(中央, shout)
 ...
 
-後製文字資訊已儲存至 output/dialogue-overlay.json
+後製文字資訊已儲存至 output/{slug}/{version}/dialogue-overlay.json
 ```
 
 5. 請使用者選擇：
