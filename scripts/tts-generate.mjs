@@ -59,9 +59,12 @@ async function generateSpeech(text, outputPath, options = {}, retryCount = 0) {
     mkdirSync(dir, { recursive: true })
   }
 
-  // 建立 SSML 或直接用 edge-tts CLI 參數
+  // 尋找 edge-tts 執行檔：venv > 系統 PATH
+  const projectRoot = resolve(dirname(new URL(import.meta.url).pathname), '..')
+  const venvEdgeTts = join(projectRoot, '.venv', 'bin', 'edge-tts')
+  const edgeTtsCmd = existsSync(venvEdgeTts) ? venvEdgeTts : 'edge-tts'
+
   const args = [
-    'edge-tts',
     '--voice', voiceId,
     '--rate', rate,
     '--pitch', pitch,
@@ -71,9 +74,8 @@ async function generateSpeech(text, outputPath, options = {}, retryCount = 0) {
   ]
 
   try {
-    await execFileAsync('npx', args, {
+    await execFileAsync(edgeTtsCmd, args, {
       timeout: 30000,
-      env: { ...process.env, NODE_NO_WARNINGS: '1' },
     })
 
     // 取得檔案大小

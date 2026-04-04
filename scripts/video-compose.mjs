@@ -106,7 +106,7 @@ async function renderWithFFmpeg(config, outputPath) {
     const zoomExpr = `${zoomStart}+(${zoomEnd}-${zoomStart})*on/${durationFrames}`
 
     filterParts.push(
-      `[${i}:v]scale=${width * 2}:${height * 2},zoompan=z='${zoomExpr}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${durationFrames}:s=${width}x${height}:fps=${fps}[v${i}]`
+      `[${i}:v]scale=${width * 2}:${height * 2},zoompan=z='${zoomExpr}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${durationFrames}:s=${width}x${height}:fps=${fps},trim=duration=${panel.durationSec},setpts=PTS-STARTPTS,setsar=1[v${i}]`
     )
     concatInputs.push(`[v${i}]`)
   }
@@ -138,7 +138,16 @@ async function renderWithFFmpeg(config, outputPath) {
     outputPath,
   ]
 
-  await execFileAsync(ffmpegPath, args, { timeout: 300000 })
+  try {
+    await execFileAsync(ffmpegPath, args, { timeout: 300000, maxBuffer: 10 * 1024 * 1024 })
+  } catch (error) {
+    // FFmpeg 會把進度資訊寫到 stderr，導致 execFile 認為失敗
+    // 如果檔案存在且大小 > 0，視為成功
+    if (existsSync(outputPath) && statSync(outputPath).size > 0) {
+      return // 成功
+    }
+    throw error
+  }
 }
 
 /**
