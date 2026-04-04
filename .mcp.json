@@ -7,6 +7,14 @@
         "GEMINI_API_KEY": "${GEMINI_API_KEY}",
         "GEMINI_MODEL": "${GEMINI_MODEL}"
       }
+    },
+    "tts-generate": {
+      "command": "node",
+      "args": ["scripts/tts-generate.mjs"]
+    },
+    "video-compose": {
+      "command": "node",
+      "args": ["scripts/video-compose.mjs"]
     }
   }
 }

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "categories": {
+    "funny": {
+      "description": "搞笑輕快",
+      "tracks": []
+    },
+    "warm": {
+      "description": "溫馨感人",
+      "tracks": []
+    },
+    "tense": {
+      "description": "緊張懸疑",
+      "tracks": []
+    },
+    "upbeat": {
+      "description": "熱血激昂",
+      "tracks": []
+    },
+    "melancholy": {
+      "description": "憂傷安靜",
+      "tracks": []
+    }
+  },
+  "toneMapping": {
+    "搞笑": "funny",
+    "喜劇": "funny",
+    "溫馨": "warm",
+    "治癒": "warm",
+    "小確幸": "warm",
+    "懸疑": "tense",
+    "驚悚": "tense",
+    "恐怖": "tense",
+    "熱血": "upbeat",
+    "冒險": "upbeat",
+    "戰鬥": "upbeat",
+    "憂傷": "melancholy",
+    "虐心": "melancholy",
+    "黑暗": "melancholy"
+  },
+  "note": "BGM 音檔待補充。請將免費可商用的 .mp3 放入 config/bgm/{category}/ 目錄，並在此索引中登錄。"
+}

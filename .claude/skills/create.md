@@ -174,6 +174,23 @@
    - **調整畫風全部重畫** → 使用者提供新畫風描述，所有格重新生成
    - **回退到分鏡** → 回到步驟 3
 
+### 步驟 4.5：影片生成（可選）
+
+1. 詢問使用者是否要生成短影片
+2. 若是，依照 `/video` skill 流程執行：
+   - 呼叫 `video-editor` agent 產出 video-config.json
+   - 逐句 TTS 配音生成
+   - Remotion 影片渲染
+   - FFmpeg 音軌合成
+3. 產出存放於 `output/{slug}/{version}/video/`
+4. 使用者審核：滿意 / 調整配音 / 調整節奏 / 重新生成
+
+```
+═══ 階段完成：影片生成 ═══
+短影片已儲存至 output/{slug}/{version}/video/final.mp4
+即將完成，是否繼續？(繼續 / 回退 / 暫停)
+```
+
 ### 步驟 5：完成
 
 1. 更新 `output/manifest.json`（新增版本記錄）
@@ -207,5 +224,6 @@
 分鏡腳本：output/{slug}/{version}/storyboard.json
 漫畫圖片：output/{slug}/{version}/pages/
 後製文字：output/{slug}/{version}/dialogue-overlay.json
+短片影片：output/{slug}/{version}/video/final.mp4（若有生成）
 流程指標：output/{slug}/{version}/metrics.json
 ```

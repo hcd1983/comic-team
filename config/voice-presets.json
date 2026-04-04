@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "presets": {
+    "young-female": {
+      "voiceId": "zh-TW-HsiaoChenNeural",
+      "rate": "+0%",
+      "pitch": "+0Hz",
+      "volume": "+0%",
+      "description": "年輕女性，清晰溫柔"
+    },
+    "young-male": {
+      "voiceId": "zh-TW-YunJheNeural",
+      "rate": "+0%",
+      "pitch": "+0Hz",
+      "volume": "+0%",
+      "description": "年輕男性，沉穩清晰"
+    },
+    "teen-female": {
+      "voiceId": "zh-TW-HsiaoChenNeural",
+      "rate": "+5%",
+      "pitch": "+2Hz",
+      "volume": "+5%",
+      "description": "少女，活潑甜美"
+    },
+    "teen-male": {
+      "voiceId": "zh-TW-YunJheNeural",
+      "rate": "+5%",
+      "pitch": "+1Hz",
+      "volume": "+5%",
+      "description": "少年，陽光有活力"
+    },
+    "mature-female": {
+      "voiceId": "zh-TW-HsiaoYuNeural",
+      "rate": "+0%",
+      "pitch": "+0Hz",
+      "volume": "+0%",
+      "description": "成熟女性，溫和親切"
+    },
+    "mature-male": {
+      "voiceId": "zh-TW-YunJheNeural",
+      "rate": "-5%",
+      "pitch": "-2Hz",
+      "volume": "+0%",
+      "description": "成熟男性，穩重低沉"
+    },
+    "elder-female": {
+      "voiceId": "zh-TW-HsiaoYuNeural",
+      "rate": "-10%",
+      "pitch": "-3Hz",
+      "volume": "-5%",
+      "description": "年長女性，慈祥和藹"
+    },
+    "elder-male": {
+      "voiceId": "zh-TW-YunJheNeural",
+      "rate": "-10%",
+      "pitch": "-3Hz",
+      "volume": "-5%",
+      "description": "年長男性，從容穩重"
+    },
+    "narrator": {
+      "voiceId": "zh-TW-HsiaoChenNeural",
+      "rate": "-5%",
+      "pitch": "-1Hz",
+      "volume": "+0%",
+      "description": "旁白，沉穩清晰"
+    }
+  },
+  "styleModifiers": {
+    "shout": { "rate": "+20%", "volume": "+20%", "description": "大喊" },
+    "whisper": { "rate": "-15%", "volume": "-30%", "description": "低語" },
+    "thought": { "rate": "-10%", "volume": "-15%", "description": "內心獨白" },
+    "excited": { "rate": "+10%", "volume": "+10%", "pitch": "+2Hz", "description": "興奮" },
+    "sad": { "rate": "-10%", "volume": "-10%", "pitch": "-2Hz", "description": "悲傷" },
+    "normal": { "description": "正常" }
+  }
+}
