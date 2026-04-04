@@ -1,0 +1,150 @@
+{
+  "title": "潤稿之後",
+  "format": "short-video",
+  "resolution": { "width": 720, "height": 1280 },
+  "fps": 24,
+  "totalDurationSec": 28,
+  "bgm": {
+    "category": "melancholy",
+    "track": "",
+    "volume": 0.3,
+    "fadeInSec": 1.0,
+    "fadeOutSec": 2.0
+  },
+  "voiceAssignments": {
+    "narrator": { "preset": "narrator", "voiceId": "zh-TW-HsiaoChenNeural", "rate": "-5%", "pitch": "-1Hz" },
+    "xiaocheng": { "preset": "young-female", "voiceId": "zh-TW-HsiaoChenNeural", "rate": "+0%", "pitch": "+2Hz" }
+  },
+  "panels": [
+    {
+      "panelNumber": 1,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/pages/page1_panel1.png",
+      "durationSec": 8.0,
+      "transition": { "type": "fade", "durationSec": 0.5 },
+      "animationPrompt": "Gentle subtle animation of a 2D manga illustration. Girl with high ponytail slowly blinks, slight breathing motion in shoulders, soft hair sway. Warm orange screen light gently flickers on her face. Cozy late-night atmosphere. Maintain the exact art style. Minimal motion.",
+      "negativePrompt": "realistic style, 3D rendering, style change, large movements, morphing, distortion",
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/video/panel1_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [
+        {
+          "speaker": "narrator",
+          "text": "深夜，小橙對著螢幕，把情書交給了AI。",
+          "delaySec": 0.5,
+          "style": "normal",
+          "layer": "narration",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p1_narration.mp3"
+        },
+        {
+          "speaker": "xiaocheng",
+          "text": "幫我順一下語氣就好，拜託了。",
+          "delaySec": 4.5,
+          "style": "whisper",
+          "layer": "character-os",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p1_os.mp3"
+        }
+      ],
+      "subtitles": [
+        { "text": "深夜，小橙對著螢幕，把情書交給了AI。", "startSec": 0.5, "endSec": 4.0, "style": { "fontSize": 36, "fontFamily": "Noto Sans TC", "color": "#FFFFFF", "strokeColor": "#000000", "strokeWidth": 2, "position": "bottom", "animation": "fadeIn" } }
+      ]
+    },
+    {
+      "panelNumber": 2,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/pages/page1_panel2.png",
+      "durationSec": 7.0,
+      "transition": { "type": "fade", "durationSec": 0.5 },
+      "animationPrompt": "Gentle animation of a 2D manga illustration. Girl in side profile tilts head slightly, right finger lightly touches corner of mouth, eyes move as if reading screen. Warm orange glow on face. Maintain illustration art style. Minimal subtle motion.",
+      "negativePrompt": "realistic style, 3D rendering, style change, large movements, morphing, distortion",
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/video/panel2_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [
+        {
+          "speaker": "xiaocheng",
+          "text": "好像更好了耶。",
+          "delaySec": 0.5,
+          "style": "normal",
+          "layer": "dialogue",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p2_dialogue.mp3"
+        },
+        {
+          "speaker": "narrator",
+          "text": "她一邊讀，一邊微微點頭。",
+          "delaySec": 3.0,
+          "style": "normal",
+          "layer": "narration",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p2_narration.mp3"
+        }
+      ],
+      "subtitles": [
+        { "text": "好像更好了耶⋯⋯", "startSec": 0.5, "endSec": 2.5, "style": { "fontSize": 36, "fontFamily": "Noto Sans TC", "color": "#FFFFFF", "strokeColor": "#000000", "strokeWidth": 2, "position": "bottom", "animation": "fadeIn" } }
+      ]
+    },
+    {
+      "panelNumber": 3,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/pages/page1_panel3.png",
+      "durationSec": 7.0,
+      "transition": { "type": "zoom", "durationSec": 0.3 },
+      "animationPrompt": "Dramatic subtle animation of a 2D manga illustration. Close-up of phone screen with blue-white glow. A hand hovers over the screen, slight finger tremor. Screen light reflects and flickers. Keep 2D manga art style intact. Minimal motion, tension building.",
+      "negativePrompt": "realistic style, 3D rendering, style change, large movements, morphing, distortion",
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/video/panel3_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [
+        {
+          "speaker": "narrator",
+          "text": "螢幕上寫著。",
+          "delaySec": 0.3,
+          "style": "normal",
+          "layer": "narration",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p3_narration.mp3"
+        },
+        {
+          "speaker": "xiaocheng",
+          "text": "值得注意的是，我對您的情感十分真摯。希望這對您有幫助。",
+          "delaySec": 2.0,
+          "style": "normal",
+          "layer": "dialogue",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p3_dialogue.mp3"
+        }
+      ],
+      "subtitles": [
+        { "text": "「我對您的情感十分真摯。希望這對您有幫助😊」", "startSec": 2.0, "endSec": 6.5, "style": { "fontSize": 36, "fontFamily": "Noto Sans TC", "color": "#FFD700", "strokeColor": "#000000", "strokeWidth": 2, "position": "bottom", "animation": "typewriter" } }
+      ]
+    },
+    {
+      "panelNumber": 4,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/pages/page1_panel4.png",
+      "durationSec": 8.0,
+      "transition": { "type": "fade", "durationSec": 1.0 },
+      "animationPrompt": "Slow gentle animation of a 2D manga illustration. Girl sits motionless with hollow empty expression, very slow blink, slight shoulder drop. Screen casts cold blue-white light. Melancholic still atmosphere. Preserve manga illustration aesthetic completely. Barely any motion.",
+      "negativePrompt": "realistic style, 3D rendering, style change, large movements, morphing, distortion",
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/video/panel4_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [
+        {
+          "speaker": "narrator",
+          "text": "她已不確定。",
+          "delaySec": 1.0,
+          "style": "normal",
+          "layer": "narration",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p4_narration.mp3"
+        },
+        {
+          "speaker": "xiaocheng",
+          "text": "哪句話，是自己說的。",
+          "delaySec": 4.0,
+          "style": "whisper",
+          "layer": "character-os",
+          "audioPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/ai-polish/v1/audio/p4_os.mp3"
+        }
+      ],
+      "subtitles": [
+        { "text": "她已不確定哪句話是自己說的。", "startSec": 1.0, "endSec": 7.0, "style": { "fontSize": 36, "fontFamily": "Noto Sans TC", "color": "#FFFFFF", "strokeColor": "#000000", "strokeWidth": 2, "position": "bottom", "animation": "fadeIn" } }
+      ]
+    }
+  ],
+  "endCard": {
+    "durationSec": 3.0,
+    "text": "潤稿之後",
+    "subtext": "AI 漫畫短片",
+    "bgColor": "#1a1a2e"
+  }
+}
