@@ -1,0 +1,47 @@
+{
+  "title": "潤稿之後",
+  "format": "four-panel",
+  "overlays": [
+    {
+      "page": 1,
+      "panel": 1,
+      "type": "sticky-note",
+      "text": "幫我順一下語氣就好！",
+      "position": "螢幕邊緣便利貼位置",
+      "style": "手寫風格、黃色便利貼底色、黑色文字"
+    },
+    {
+      "page": 1,
+      "panel": 1,
+      "type": "handwriting",
+      "text": "這樣說太奇怪嗎？",
+      "position": "桌上情書原稿旁的括號註記",
+      "style": "手寫風格、淡灰色、小字"
+    },
+    {
+      "page": 1,
+      "panel": 2,
+      "type": "dialogue",
+      "text": "好像更好了耶⋯⋯",
+      "position": "小橙頭部右上方對話框",
+      "style": "圓角對話框、白底黑字、字體偏可愛"
+    },
+    {
+      "page": 1,
+      "panel": 3,
+      "type": "screen-text",
+      "text": "值得注意的是，我對您的情感十分真摯。希望這對您有幫助\ud83d\ude0a",
+      "position": "手機螢幕空白區域，聊天訊息格式",
+      "style": "聊天氣泡框、綠色底白字（仿 LINE 訊息）、字體工整。兩個「您」字需加粗或特殊色標示，暗示刺痛點",
+      "note": "對方曾叫她不要說「您」，這裡她不自覺寫了兩次「您」是被 AI 同化的關鍵證據"
+    },
+    {
+      "page": 1,
+      "panel": 4,
+      "type": "narration",
+      "text": "她已不確定哪句話是自己說的。",
+      "position": "畫面下方或右下角",
+      "style": "無框、白色小字、略帶透明、字體纖細"
+    }
+  ]
+}

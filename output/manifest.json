@@ -1,6 +1,22 @@
 {
   "projects": [
     {
+      "slug": "ai-polish",
+      "title": "潤稿之後",
+      "format": "four-panel",
+      "style": "cute Japanese manga, soft lines, warm-cool contrast",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-04",
+          "status": "completed",
+          "episodes": [
+            { "episode": 1, "title": "潤稿之後" }
+          ]
+        }
+      ]
+    },
+    {
       "slug": "mao-mao-apartment",
       "title": "毛毛公寓日常",
       "format": "four-panel",

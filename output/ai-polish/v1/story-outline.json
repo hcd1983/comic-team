@@ -1,0 +1,63 @@
+{
+  "title": "潤稿之後",
+  "theme": "AI 相關笑話，可愛風格",
+  "synopsis": "女孩請 AI 潤飾情書，卻發現自己不知不覺連日常訊息都變成了 AI 文體，再也分不清哪句話是自己說的。",
+  "characters": [
+    {
+      "id": "xiaocheng",
+      "name": "小橙",
+      "personality": "害羞內向但努力表達情感，說話帶點笨拙的可愛感，容易被影響但本性真誠",
+      "appearance": "馬尾扎高、棕橘色碎髮、圓眼睛略帶黑眼圈、小巧鼻子、嘴角自然下垂的軟萌臉型",
+      "outfit": "寬版米白色舊衛衣、袖口微磨損、黑色打底褲、手腕戴一條細橡皮筋",
+      "referenceImages": [
+        "output/ai-polish/v1/characters/xiaocheng-front.png",
+        "output/ai-polish/v1/characters/xiaocheng-expressions.png"
+      ],
+      "expressions": {
+        "default": "嘴角自然下垂、眼神柔和帶一點倦意的日常表情",
+        "shy-hopeful": "歪頭微笑、手指尖輕碰嘴角、眼神飄走，害羞期待的樣子",
+        "slightly-puzzled": "眉頭微皺、嘴微張、眼神稍亮但帶困惑，一閃即過的矛盾感",
+        "confident-wrong": "嘴角微揚帶篤定、眼神專注螢幕，以為自己在進化的錯誤自信",
+        "hollow": "眼神渙散半開、嘴巴輕閉、肩膀微垮，什麼表情都沒有的空洞當機臉"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "late-night-desk",
+      "description": "深夜臥室書桌一角。暖橘色螢幕光從正前方筆電打在臉上，背景是冷藍黑暗的房間，形成強烈冷暖對比。桌面雜亂：筆記型電腦居中、散落的手寫稿紙（有塗改痕跡和括號註記）、一杯快涼的茶、便利貼貼在螢幕邊緣。地板隱約可見拖鞋和一條毛毯。天花板不可見，空間感壓縮集中在桌面區域。"
+    }
+  ],
+  "plotPoints": [
+    {
+      "beat": "起",
+      "scene": "late-night-desk",
+      "characters": ["xiaocheng"],
+      "event": "小橙把手寫情書交給 AI 潤稿，螢幕貼著便利貼寫「幫我順一下語氣就好！」。桌上的情書原稿有塗掉又重寫的字跡，旁邊寫著「這樣說太奇怪嗎？」。她雙手托腮、手肘撐桌，身體微微前傾，表情帶害羞期待。",
+      "emotion_target": "輕鬆帶入，讓讀者放鬆"
+    },
+    {
+      "beat": "承",
+      "scene": "late-night-desk",
+      "characters": ["xiaocheng"],
+      "event": "AI 回傳潤稿版，文字流暢完美無瑕。小橙側面被螢幕光照亮，右手食指點嘴角，邊讀邊點頭「好像更好了耶⋯⋯」。但眉頭微微皺了一下——那種「好像沒這麼想說」的矛盾一閃即過，她沒抓住。",
+      "emotion_target": "情緒上升，隱隱不安"
+    },
+    {
+      "beat": "轉",
+      "scene": "late-night-desk",
+      "characters": ["xiaocheng"],
+      "event": "畫面被螢幕文字填滿，小橙縮到右下角只剩握手機的手。螢幕上是她自己寫的新訊息：「值得注意的是，我對你的情感十分真摯。希望這對您有幫助😊」。她的手指懸在螢幕上，臉上甚至有一點篤定——她以為這是進化。",
+      "emotion_target": "反轉衝擊，笑中帶涼意"
+    },
+    {
+      "beat": "合",
+      "scene": "late-night-desk",
+      "characters": ["xiaocheng"],
+      "event": "正面近景，螢幕冷光從下方打臉。小橙雙手放膝上，肩膀微垮，眼神渙散盯著螢幕上的「您」字。視線餘光落到桌上那張有塗改痕跡的情書原稿。旁白小字：「她已不確定哪句話是自己說的。」",
+      "emotion_target": "靜默收尾，笑後餘韻"
+    }
+  ],
+  "tone": "搞笑",
+  "style": "日系可愛漫畫風格，柔和線條，暖色調為主，表情誇張但不失細膩"
+}

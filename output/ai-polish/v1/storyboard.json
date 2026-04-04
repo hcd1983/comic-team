@@ -1,0 +1,82 @@
+{
+  "title": "潤稿之後",
+  "format": "four-panel",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "panels": [
+        {
+          "panelNumber": 1,
+          "description": "遠景俯角，從略高於小橙頭頂的角度俯視書桌一角。小橙雙手托腮、手肘撐桌、身體微微前傾，視線朝向筆電螢幕。桌面散落手寫稿紙，稿紙上有塗改痕跡與括號註記。一杯快涼的茶放在一旁，便利貼貼在螢幕邊緣。暖橘色螢幕光打亮臉部和桌面，背景是冷藍的深夜房間。",
+          "dialogue": "",
+          "stickyNote": "幫我順一下語氣就好！",
+          "cameraAngle": "俯瞰",
+          "emotion": "害羞期待、輕鬆帶入",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "cute Japanese manga style, soft linework, warm color palette, expressive but delicate character art, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "wide overhead angle looking down, 3:4 portrait ratio, subject occupies lower two-thirds of frame",
+            "scene": "late-night bedroom desk corner, warm orange laptop screen glow illuminating the surface from the front, cool dark blue background room, cluttered desk with scattered handwritten draft papers with crossed-out rewrites and bracket annotations, a nearly-cold cup of tea, sticky note on screen edge",
+            "characters": "Xiaocheng: high ponytail with loose brown-orange bangs, round eyes with slight dark circles, small nose, naturally downturned soft mouth; wearing oversized worn white hoodie with slightly frayed cuffs, black leggings, thin rubber band on wrist; sitting with both elbows on desk, chin resting on hands, body leaning slightly forward toward the screen, expression shy-hopeful — head slightly tilted, faint smile, eyes drifting sideways",
+            "mood": "cozy late-night warmth, soft anticipation"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 2,
+          "description": "中景側拍，小橙的側臉被筆電螢幕的暖橘光從左側照亮，右手食指輕點嘴角，另一手放在桌上。眼神望向螢幕，邊讀邊微微點頭。眉頭有一瞬間輕輕皺起，嘴微張，一閃即過的困惑表情，但她沒有停下來深思。背景維持深夜冷藍房間。",
+          "dialogue": "好像更好了耶⋯⋯",
+          "cameraAngle": "中景",
+          "emotion": "情緒上升、隱隱不安",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "cute Japanese manga style, soft linework, warm color palette, expressive but delicate character art, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "medium side-profile shot, 3:4 portrait ratio, character facing left toward off-frame screen",
+            "scene": "late-night bedroom desk corner, strong warm orange laptop glow lighting the character's face from the left, cold blue-dark background, desk surface partially visible with scattered papers",
+            "characters": "Xiaocheng: high ponytail with loose brown-orange bangs, round eyes with slight dark circles, small nose, naturally downturned soft mouth; wearing oversized worn white hoodie, black leggings, thin rubber band on wrist; side profile, right index finger lightly touching corner of mouth, other hand resting on desk, expression slightly-puzzled — eyebrow furrowed slightly, mouth barely open, eyes a little brighter but carrying fleeting confusion",
+            "mood": "warm screen glow on face, subtle unease beneath surface calm"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 3,
+          "description": "大特寫，螢幕畫面幾乎填滿整格畫面，帶出強烈螢幕藍白光。小橙縮到畫面右下角，只露出握著手機的一隻手，手指懸停在手機螢幕上方、尚未按下送出。臉部帶著篤定輕微得意的表情，以為自己的文字技巧正在進化。整格以螢幕藍白光為主色調，製造衝擊感。",
+          "dialogue": "",
+          "screenText": "值得注意的是，我對你的情感十分真摯。希望這對您有幫助😊",
+          "cameraAngle": "特寫",
+          "emotion": "反轉衝擊、笑中帶涼意",
+          "layoutHint": "大格",
+          "promptTemplate": {
+            "stylePrefix": "cute Japanese manga style, soft linework, dramatic composition, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "extreme close-up of smartphone screen filling the frame, 3:4 portrait ratio, character's hand visible only in bottom-right corner",
+            "scene": "bright blue-white smartphone screen light dominates the panel, cold glowing phone display, dark background, only a small corner shows the character",
+            "characters": "Xiaocheng: only her hand holding the smartphone is visible in the bottom-right corner, index finger hovering over the screen surface, not yet pressing send; her partially visible face shows expression confident-wrong — slight upward curve at the corner of her mouth, focused eyes directed at the screen, misplaced confidence as if witnessing her own growth; wearing oversized worn white hoodie sleeve visible, thin rubber band on wrist",
+            "mood": "cold blue-white screen dominance, ironic confidence, comedic dramatic impact"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 4,
+          "description": "正面近景，留白構圖。螢幕冷藍光從正下方或略偏下打亮小橙臉部，形成底光效果，製造空洞感。小橙雙手輕放膝上，肩膀微微下垮，眼神渙散半閉，視線漫無目的地游移。構圖留白大，周圍冷藍色調，氣氛靜默。視線餘光方向隱約帶向畫面外下方，暗示桌上情書原稿的存在。",
+          "dialogue": "",
+          "narration": "她已不確定哪句話是自己說的。",
+          "cameraAngle": "中景",
+          "emotion": "靜默收尾、笑後餘韻",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "cute Japanese manga style, soft linework, cool color palette, melancholic quiet atmosphere, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "frontal medium close-up, 3:4 portrait ratio, centered with generous negative space around character",
+            "scene": "late-night bedroom, cold blue ambient darkness, laptop screen emitting upward cold blue light onto the character's face from below, desk corner barely visible at the very bottom edge of frame with a glimpse of a handwritten paper",
+            "characters": "Xiaocheng: high ponytail with loose brown-orange bangs, round eyes with slight dark circles, small nose, naturally downturned soft mouth; wearing oversized worn white hoodie, black leggings, thin rubber band on wrist; sitting upright but with slightly drooped shoulders, both hands resting loosely on lap, expression hollow — eyes half-open and unfocused, blank vacant stare, mouth gently closed, all emotion drained from face, gaze drifting slightly downward toward off-frame",
+            "mood": "cold blue silence, hollow stillness, quiet existential punchline"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        }
+      ]
+    }
+  ]
+}
