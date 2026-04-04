@@ -4,12 +4,12 @@
 
 ## 前置條件
 
-- 需要 `output/story-outline.json`（來自 /discuss），且 `characters` 欄位完整
+- 需要 `output/{slug}/{version}/story-outline.json`（來自 /discuss），且 `characters` 欄位完整
 - 環境變數 `GEMINI_API_KEY` 必須已設定
 
 ## 流程
 
-1. 讀取 `output/story-outline.json` 的 `characters` 陣列
+1. 讀取 `output/{slug}/{version}/story-outline.json` 的 `characters` 陣列
 2. 為每個角色生成設定圖：
    - **正面全身圖**：呼叫 `gemini_draw`，參數：
      - prompt：`Character design sheet. [style]. Full body front view, standing pose, white background, no text, no speech bubbles. [appearance]. [outfit]. Expression: [default expression].`
@@ -21,8 +21,8 @@
      - `imageSize`: `1K`
      - `referenceImages`: 傳入剛生成的正面全身圖作為參考，維持角色一致性
    - 輸出路徑：
-     - `output/characters/{character.id}_front.png`
-     - `output/characters/{character.id}_expr_{表情名}.png`
+     - `output/{slug}/{version}/characters/{character.id}_front.png`
+     - `output/{slug}/{version}/characters/{character.id}_expr_{表情名}.png`
 3. 逐個角色呈現設定圖給使用者審核：
 
 ```

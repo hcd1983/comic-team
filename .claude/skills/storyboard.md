@@ -4,12 +4,12 @@
 
 ## 前置條件
 
-- 需要 `output/story-outline.json`（來自 /discuss），或使用者手動提供劇本內容
+- 需要 `output/{slug}/{version}/story-outline.json`（來自 /discuss），或使用者手動提供劇本內容
 - 若檔案不存在，提示使用者先執行 `/discuss` 或直接輸入劇本
 
 ## 流程
 
-1. 讀取 `output/story-outline.json`，若不存在則詢問使用者提供劇本內容
+1. 讀取 `output/{slug}/{version}/story-outline.json`，若不存在則詢問使用者提供劇本內容
 2. 詢問漫畫格式（若未指定）：
    - **單頁漫畫**（4-6 格）
    - **四格漫畫**（固定 4 格：起承轉合）
@@ -44,9 +44,9 @@
    - **跳過** → 稍後再看
 
 6. 所有格審核完畢後，顯示完整分鏡供最終確認：
-   - **全部確認** → 儲存至 `output/storyboard.json`，完成
+   - **全部確認** → 儲存至 `output/{slug}/{version}/storyboard.json`，完成
    - **修改後重新生成** → 使用者提供修改意見，連同上一版分鏡一起傳給分鏡師重新生成（不是從零開始）
    - **重新生成** → 直接重新呼叫分鏡師
    - **回退到討論** → 提示使用者執行 `/discuss` 重新討論
 
-7. 確認後儲存分鏡 JSON 至 `output/storyboard.json`，告知使用者檔案路徑。
+7. 確認後儲存分鏡 JSON 至 `output/{slug}/{version}/storyboard.json`，告知使用者檔案路徑。
