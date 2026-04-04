@@ -135,7 +135,7 @@ async function handleRequest(request) {
       result: {
         protocolVersion: '2024-11-05',
         capabilities: { tools: {} },
-        serverInfo: { name: 'gemini-draw', version: '1.0.0' },
+        serverInfo: { name: 'gemini-draw', version: '2.0.0' },
       },
     }
   }
@@ -153,7 +153,7 @@ async function handleRequest(request) {
           {
             name: 'gemini_draw',
             description:
-              '使用 Gemini API 生成漫畫圖片。傳入 prompt 和輸出路徑，回傳生成的圖片檔案路徑。失敗時自動重試 1 次。',
+              '使用 Gemini API (v2) 生成漫畫圖片。支援 aspectRatio（圖片比例）、imageSize（解析度）、referenceImages（角色參考圖）。失敗時自動重試 1 次。',
             inputSchema: {
               type: 'object',
               properties: {
