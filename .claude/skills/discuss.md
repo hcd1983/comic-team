@@ -6,7 +6,7 @@
 
 1. 詢問使用者故事主題或大綱（若未提供）
 1.5. 讀取素材包（若存在）：
-   - 若 `output/material-pack.json` 存在，讀取並在討論前呈現摘要（topInsights、avoidList、suggestedAngles）
+   - 若 `output/{slug}/{version}/material-pack.json` 存在，讀取並在討論前呈現摘要（topInsights、avoidList、suggestedAngles）
    - 若不存在，提示使用者可先執行 `/research` 搜集素材，或直接跳過進入討論
    - 素材包的內容會作為 context 傳給每位編劇，讓他們在討論時引用
 1.8. 導演開場：根據主題和素材包，給出本次討論的限制條件：
@@ -72,7 +72,7 @@
    - **補充意見** → 使用者提供額外方向，帶入下一輪
    - **換方向** → 重新回到提案階段
 
-7. 使用者確定方向後，將結果整理成以下 JSON 並儲存至 `output/story-outline.json`：
+7. 使用者確定方向後，將結果整理成以下 JSON 並儲存至 `output/{slug}/{version}/story-outline.json`：
 
 ```json
 {
