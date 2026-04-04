@@ -1,0 +1,103 @@
+{
+  "title": "毛毛公寓日常",
+  "theme": "可愛動物擬人化合租公寓生活 — 倉鼠囤食本能 × 貓咪狩獵本能的日常衝突與溫暖",
+  "synopsis": "倉鼠小圓和灰貓阿灰是房東奶奶配對的室友。小圓天真愛囤食，阿灰慵懶但狩獵本能一觸即發。兩人天性對撞鬧出無數笑話，但每天結尾總有一個讓人心暖的瞬間。",
+  "characters": [
+    {
+      "id": "yuan",
+      "name": "小圓",
+      "personality": "天真信賴型。開朗愛囤食，腮幫子隨時塞東西，覺得阿灰很酷很可靠。容易驚慌但恢復力極強。",
+      "appearance": "倉鼠擬人，圓滾滾體型，橘色短毛，大圓耳朵，圓圓的黑豆眼，粉紅色小鼻子，腮幫子隨時微鼓",
+      "outfit": "米白色吊帶短褲，淺橘條紋T恤，頭上戴粉紅蝴蝶結髮夾，腳穿圓頭小皮鞋",
+      "expressions": {
+        "default": "開心微笑，黑豆眼閃亮，腮幫子微鼓",
+        "stuffed": "腮幫子鼓到極限，眼睛被擠成瞇縫，滿足的幸福表情",
+        "panic": "黑豆眼瞪大成圓形，腮幫子內容物開始掉出，全身僵硬",
+        "offering": "微微低頭，雙手捧出食物，黑豆眼水汪汪往上看"
+      },
+      "referenceImages": {
+        "front": "output/characters/yuan_front.png"
+      }
+    },
+    {
+      "id": "gray",
+      "name": "阿灰",
+      "personality": "嘴硬照顧型。表面慵懶冷淡嫌小圓吵，但身體會自動幫她夠高處東西。狩獵本能一觸即發。",
+      "appearance": "灰貓擬人，修長體型，銀灰色長毛，尖耳朵，細長的金色貓瞳，表情永遠半瞇眼",
+      "outfit": "深灰色 oversized 帽T，帽沿常遮住半張臉，黑色短褲，不穿鞋（貓的堅持）",
+      "expressions": {
+        "default": "半瞇眼慵懶，嘴角微微下彎，假裝不在意",
+        "predator": "帽沿陰影遮半臉，瞳孔從細縫爆放大成圓形，嘴角微微上揚，背景暗色放射線",
+        "tsundere_blush": "別過頭不看對方，耳朵微紅，嘴巴扁起來",
+        "nap": "完全閉眼，身體蜷成一團，尾巴捲住自己"
+      },
+      "referenceImages": {
+        "front": "output/characters/gray_front.png"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "apartment-kitchen",
+      "description": "小公寓廚房區，暖黃吊燈，木地板，白色小冰箱，料理台上散落零食包裝。粉橘暖色調，溫馨感。牆上貼著手寫的「公寓規則」紙條"
+    },
+    {
+      "id": "apartment-night",
+      "description": "深夜的同一間公寓，只有冰箱的微光和月光從窗戶灑入。色調轉為深藍+月光銀白，安靜氛圍"
+    },
+    {
+      "id": "apartment-floor",
+      "description": "公寓木地板上，追逐後兩人倒在地上的場景。暖黃燈光，散落的零食薯片，溫馨收尾氛圍"
+    }
+  ],
+  "plotPoints": [
+    {
+      "beat": "起",
+      "scene": "apartment-kitchen",
+      "characters": ["yuan"],
+      "event": "小圓開心地把一週份零食塞進冰箱，腮幫子還含著一顆糖",
+      "emotion_target": "可愛日常感，建立小圓囤食天性"
+    },
+    {
+      "beat": "承",
+      "scene": "apartment-night",
+      "characters": ["yuan"],
+      "event": "半夜小圓偷偷把零食全藏進腮幫子，月光下腮幫子鼓到極限",
+      "emotion_target": "荒謬笑點——倉鼠本能全開"
+    },
+    {
+      "beat": "轉",
+      "scene": "apartment-night",
+      "characters": ["yuan", "gray"],
+      "event": "阿灰開冰箱發現全空，慢慢轉頭，帽沿陰影下瞳孔爆放大鎖定小圓——掠食者開關啟動",
+      "emotion_target": "張力爆發——慵懶貓咪瞬間變獵手的反差衝擊"
+    },
+    {
+      "beat": "合",
+      "scene": "apartment-floor",
+      "characters": ["yuan", "gray"],
+      "event": "追逐後兩人滾成一團倒在地上，薯片散落。小圓默默把最後一片遞到阿灰嘴邊，阿灰別頭咬走，耳朵微紅：「……下次藏好一點。」",
+      "emotion_target": "笑完心暖——傲嬌貓的溫柔收尾"
+    }
+  ],
+  "tone": "搞笑（帶溫暖療癒）",
+  "format": "four-panel",
+  "style": "Sanrio-inspired cute animal character style, round soft shapes, pastel color palette, bold clean outlines, chibi 2-3 head proportion, expressive large eyes",
+  "visualNotes": {
+    "panel1": "寬扁橫幅全景（aspectRatio 16:9），小圓開心塞冰箱，暖黃粉橘色調",
+    "panel2": "小正方特寫（aspectRatio 1:1），月光下腮幫子鼓到極限的小圓臉部",
+    "panel3": "最大格（aspectRatio 4:3），斜切對角線，阿灰帽沿陰影+瞳孔爆放大，背景暗色放射線",
+    "panel4": "橫長條（aspectRatio 16:9），兩人倒地，薯片散落，小圓遞薯片，阿灰別頭咬走耳朵紅"
+  },
+  "seriesOutline": [
+    "第1話〈冰箱戰爭〉— 零食攻防揭示兩人天性",
+    "第2話〈快遞風波〉— 阿灰追紙箱暴露貓本能，小圓趁機囤貨",
+    "第3話〈暴雨停電夜〉— 小圓怕雷，阿灰「只是順便」靠過來",
+    "第4話〈公寓跳蚤市場〉— 擺攤暴露彼此收藏癖",
+    "第5話〈那罐果醬〉— 冰箱深處的手作果醬是阿灰偷學做的生日禮物"
+  ],
+  "foreshadowing": [
+    "冰箱深處有一罐「神秘手作果醬」貼心形貼紙，第一話只露一角 → 第五話核心道具",
+    "牆上「公寓規則」紙條，字跡有兩種 → 暗示兩人共同生活的痕跡"
+  ]
+}

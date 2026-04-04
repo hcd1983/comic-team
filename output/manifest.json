@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "slug": "mao-mao-apartment",
+      "title": "毛毛公寓日常",
+      "format": "four-panel",
+      "style": "Sanrio-inspired cute animal",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-04",
+          "status": "completed",
+          "episodes": [
+            { "episode": 1, "title": "冰箱戰爭" }
+          ]
+        }
+      ]
+    }
+  ],
+  "legacy": {
+    "description": "早期提案的殘留檔案（社恐女孩等），未結構化",
+    "path": "output/legacy/"
+  }
+}

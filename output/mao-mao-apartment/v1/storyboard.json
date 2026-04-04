@@ -1,0 +1,73 @@
+{
+  "title": "冰箱戰爭",
+  "format": "four-panel",
+  "pages": [{
+    "pageNumber": 1,
+    "panels": [
+      {
+        "panelNumber": 1,
+        "description": "小圓開心地把各種零食塞進冰箱，公寓廚房暖黃燈光，粉橘色牆壁",
+        "dialogue": "",
+        "cameraAngle": "medium wide shot, slightly low angle",
+        "emotion": "cheerful, excited",
+        "layoutHint": "寬扁橫幅",
+        "aspectRatio": "16:9",
+        "imageSize": "2K",
+        "promptTemplate": {
+          "stylePrefix": "Sanrio-inspired cute animal character style, round soft shapes, pastel color palette, bold clean outlines, chibi 2-3 head proportion, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+          "composition": "medium wide shot, slightly low angle, warm golden lighting, cozy kitchen interior, pastel pink-orange walls, wooden floor",
+          "scene": "apartment kitchen, open refrigerator glowing white light, snack bags and chip boxes stacked on counter, warm yellow overhead lamp, small round dining table in background",
+          "characters": "Hamster girl, round chubby body, orange short fur, big round ears, round black bead eyes, pink tiny nose, cream-white overalls shorts, light orange striped t-shirt, pink bow hair clip, round-toe small leather shoes, both arms stuffing colorful snack bags into fridge, happy wide smile, sparkling eyes"
+        }
+      },
+      {
+        "panelNumber": 2,
+        "description": "深夜月光下，小圓腮幫子鼓到極限的臉部大特寫，嘴邊有碎屑",
+        "dialogue": "",
+        "cameraAngle": "extreme close-up, front facing",
+        "emotion": "guilty pleasure, sneaky",
+        "layoutHint": "正方形",
+        "aspectRatio": "1:1",
+        "imageSize": "2K",
+        "promptTemplate": {
+          "stylePrefix": "Sanrio-inspired cute animal character style, round soft shapes, pastel color palette, bold clean outlines, chibi 2-3 head proportion, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+          "composition": "extreme close-up face shot, front facing, blue moonlight from window casting soft glow, dark kitchen background",
+          "scene": "nighttime kitchen, blue moonlight streaming through window, open fridge light illuminating from below, crumbs scattered",
+          "characters": "Hamster girl, round chubby body, orange short fur, big round ears, round black bead eyes, pink tiny nose, cream-white overalls shorts, light orange striped t-shirt, pink bow hair clip, cheeks puffed to maximum round size stuffed with food, tiny crumbs on mouth corners, squinting happy eyes, caught mid-chewing"
+        }
+      },
+      {
+        "panelNumber": 3,
+        "description": "阿灰打開冰箱發現全空，帽沿陰影遮住半張臉，瞳孔放大鎖定背景偷看的小圓",
+        "dialogue": "",
+        "cameraAngle": "over-the-shoulder shot from behind fridge door, dramatic low angle",
+        "emotion": "shock, menacing calm",
+        "layoutHint": "最大格",
+        "aspectRatio": "4:3",
+        "imageSize": "2K",
+        "promptTemplate": {
+          "stylePrefix": "Sanrio-inspired cute animal character style, round soft shapes, pastel color palette, bold clean outlines, chibi 2-3 head proportion, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+          "composition": "dramatic low angle, over-the-shoulder from fridge interior, fridge light casting upward shadows on face, empty fridge shelves in foreground, small hamster girl peeking from doorway in deep background",
+          "scene": "nighttime kitchen, completely empty refrigerator wide open, bright fridge light contrasting dark room, doorway in far background with tiny figure peeking around corner",
+          "characters": "Gray cat boy, slender build, silver-gray long fur, pointed ears, narrow golden cat pupils, half-lidded sleepy eyes, dark gray oversized hoodie with hood pulled up, hood shadow covering upper half of face, black shorts, barefoot, one hand on fridge door, golden pupils enlarged and glowing, staring intensely toward background; tiny Hamster girl, round chubby body, orange short fur, big round ears, round black bead eyes, pink bow hair clip, peeking nervously from behind kitchen doorway in background"
+        }
+      },
+      {
+        "panelNumber": 4,
+        "description": "追逐後兩人倒在地上喘氣，薯片散落一地，小圓遞出最後一片薯片給阿灰",
+        "dialogue": "阿灰：「……下次藏好一點。」",
+        "cameraAngle": "top-down bird's eye view",
+        "emotion": "exhausted, warm reconciliation",
+        "layoutHint": "寬橫幅",
+        "aspectRatio": "16:9",
+        "imageSize": "2K",
+        "promptTemplate": {
+          "stylePrefix": "Sanrio-inspired cute animal character style, round soft shapes, pastel color palette, bold clean outlines, chibi 2-3 head proportion, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+          "composition": "top-down bird's eye view, both characters lying on wooden floor, scattered snack debris forming circle around them, warm overhead lighting",
+          "scene": "apartment living room floor, wooden flooring, potato chips and snack crumbs scattered everywhere, empty snack bags, overturned kitchen stool in corner",
+          "characters": "Hamster girl, round chubby body, orange short fur, big round ears, round black bead eyes, pink tiny nose, cream-white overalls shorts, light orange striped t-shirt, pink bow hair clip, round-toe small leather shoes, lying on back exhausted, one tiny arm stretched out offering single potato chip, shy apologetic smile, sweat drop on forehead; Gray cat boy, slender build, silver-gray long fur, pointed ears, narrow golden cat pupils, half-lidded sleepy eyes, dark gray oversized hoodie with hood down, black shorts, barefoot, lying flat on stomach exhausted, one paw reaching toward the chip, faint reluctant smile"
+        }
+      }
+    ]
+  }]
+}

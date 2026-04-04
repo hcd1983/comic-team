@@ -1,0 +1,48 @@
+{
+  "pages": [
+    {
+      "pageNumber": 1,
+      "panels": [
+        {
+          "panelNumber": 1,
+          "imagePath": "output/page1_panel1.png",
+          "dialogues": [],
+          "soundEffects": [],
+          "uiElements": []
+        },
+        {
+          "panelNumber": 2,
+          "imagePath": "output/page1_panel2.png",
+          "dialogues": [],
+          "soundEffects": [
+            { "text": "もぐもぐ", "position": "右下", "style": "cute-small" }
+          ],
+          "uiElements": []
+        },
+        {
+          "panelNumber": 3,
+          "imagePath": "output/page1_panel3.png",
+          "dialogues": [],
+          "soundEffects": [
+            { "text": "ギロッ", "position": "阿灰頭頂", "style": "dramatic" }
+          ],
+          "uiElements": []
+        },
+        {
+          "panelNumber": 4,
+          "imagePath": "output/page1_panel4.png",
+          "dialogues": [
+            {
+              "speaker": "阿灰",
+              "text": "……下次藏好一點。",
+              "position": "右上",
+              "style": "whisper"
+            }
+          ],
+          "soundEffects": [],
+          "uiElements": []
+        }
+      ]
+    }
+  ]
+}
