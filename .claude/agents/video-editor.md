@@ -65,13 +65,54 @@ model: sonnet
 4. 最後一格 = 基礎時長 + 1.5 秒（結尾停留）
 5. 轉場時間不計入格時長
 
-## TTS 文本改寫原則
+## 多層 TTS 設計規則
+
+每格可有多段 TTS，分為三種層級：
+
+### 層級定義
+
+| 層級 | layer 值 | 用途 | 聲優 | style | 音量 |
+|------|---------|------|------|-------|------|
+| **旁白** | `narration` | 第三人稱敘述推動劇情 | narrator | normal | 100% |
+| **角色對白** | `dialogue` | 角色說出口的話 | 角色聲優 | normal/excited/sad | 90% |
+| **角色 OS** | `character-os` | 內心獨白、未說出口的想法 | 角色聲優 | thought/whisper | 85% |
+
+### 設計原則
+- 每格**至少有一段旁白或對白**，確保劇情不斷
+- 同一格內多段 TTS **不要重疊**：後段的 `delaySec` > 前段的 `delaySec` + 前段預估時長
+- 預估時長 = 文本字數 / 3.5 秒
+- 旁白和角色 OS 可以交替出現，製造「敘述 + 內心」的層次感
+- 最後一格的最後一段 TTS 結束後，留 1-2 秒靜默作為餘韻
+
+### TTS 文本改寫原則
 
 漫畫對白和語音旁白有差異，改寫時注意：
 - 刪除漫畫獨有的符號（「……」改為自然停頓）
-- 內心獨白加上「（內心）」標記，使用 whisper 風格
-- 旁白使用第三人稱敘述
+- 內心獨白使用 `thought` 或 `whisper` 風格
+- 旁白使用第三人稱敘述，語氣沉穩
+- 角色對白保持口語感
 - 若對白太短（< 5 字），可補充為完整句子
+
+### 範例（「潤稿之後」格 1）
+
+```json
+"tts": [
+  {
+    "speaker": "narrator",
+    "text": "深夜，小橙對著螢幕，把情書交給了AI。",
+    "delaySec": 0.5,
+    "style": "normal",
+    "layer": "narration"
+  },
+  {
+    "speaker": "xiaocheng",
+    "text": "幫我順一下語氣就好，拜託了。",
+    "delaySec": 4.0,
+    "style": "whisper",
+    "layer": "character-os"
+  }
+]
+```
 
 ## 聲優分配規則
 
@@ -124,14 +165,27 @@ model: sonnet
       },
       "animationPrompt": "Subtle animation maintaining 2D manga style. Character slowly blinks...",
       "negativePrompt": "realistic style, 3D rendering, style change, large movements, morphing, distortion",
-      "animatedVideoPath": "動畫影片路徑（Veo 2 生成後填入）",
+      "animatedVideoPath": "動畫影片路徑（Veo 3 生成後填入）",
+      "ambientAudio": {
+        "source": "veo3",
+        "volume": 0.15
+      },
       "tts": [
         {
-          "speaker": "角色ID 或 narrator",
-          "text": "配音文本",
+          "speaker": "narrator",
+          "text": "旁白文本",
           "delaySec": 0.5,
-          "style": "normal/shout/whisper/thought",
-          "audioPath": "音檔路徑（TTS 生成後填入）"
+          "style": "normal",
+          "layer": "narration",
+          "audioPath": "（TTS 生成後填入）"
+        },
+        {
+          "speaker": "角色ID",
+          "text": "角色內心獨白",
+          "delaySec": 4.0,
+          "style": "whisper",
+          "layer": "character-os",
+          "audioPath": "（TTS 生成後填入）"
         }
       ],
       "subtitles": [

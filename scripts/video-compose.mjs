@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Video Compose MCP Server
- * 使用 Remotion（React 影片渲染）+ FFmpeg（音軌合成）生成短影片
+ * Video Compose MCP Server v2
+ * 支援動畫影片拼接（Veo 3）+ 四層音軌混合 + 字幕燒入
  * 使用 stdio transport + JSON-RPC
  *
  * Tools:
- *   render_video   — 將 video-config.json 渲染為無聲影片
- *   compose_final  — 混合無聲影片 + TTS 音檔 + BGM → 最終影片
+ *   render_video   — 拼接動畫片段（或 Ken Burns 降級）為完整影片
+ *   compose_final  — 四層音軌混合（環境音 + BGM + 旁白 + 角色語音）
  */
 
 import { readFileSync, existsSync, mkdirSync, statSync } from 'fs'
@@ -19,8 +19,7 @@ import { promisify } from 'util'
 const execFileAsync = promisify(execFile)
 
 /**
- * 渲染影片（使用 Remotion programmatic API）
- * 備選：若 Remotion 不可用，降級為 FFmpeg zoompan
+ * 渲染影片：優先使用動畫片段拼接，降級為 Ken Burns
  */
 async function renderVideo(configPath, outputPath) {
   const startTime = Date.now()
@@ -35,34 +34,15 @@ async function renderVideo(configPath, outputPath) {
     mkdirSync(dir, { recursive: true })
   }
 
-  // 嘗試使用 Remotion
-  try {
-    const remotionEntry = resolve(
-      dirname(new URL(import.meta.url).pathname),
-      'video/src/Root.tsx'
-    )
+  // 檢查是否有動畫片段可用
+  const hasAnimated = config.panels.some(
+    (p) => p.animatedVideoPath && existsSync(p.animatedVideoPath)
+  )
 
-    // 使用 npx remotion render 指令
-    const args = [
-      'remotion', 'render',
-      remotionEntry,
-      'ComicVideo',
-      outputPath,
-      '--props', JSON.stringify({ config }),
-      '--codec', 'h264',
-      '--image-format', 'jpeg',
-      '--log', 'error',
-    ]
-
-    await execFileAsync('npx', args, {
-      timeout: 300000, // 5 分鐘超時
-      cwd: resolve(dirname(new URL(import.meta.url).pathname), 'video'),
-      env: { ...process.env, NODE_NO_WARNINGS: '1' },
-    })
-  } catch (remotionError) {
-    // 降級：使用 FFmpeg 做簡單拼接 + Ken Burns
-    console.error('Remotion 渲染失敗，降級為 FFmpeg 方案:', remotionError.message)
-    await renderWithFFmpeg(config, outputPath)
+  if (hasAnimated) {
+    await renderWithAnimatedClips(config, outputPath)
+  } else {
+    await renderWithFFmpegKenBurns(config, outputPath)
   }
 
   const stats = statSync(outputPath)
@@ -70,20 +50,101 @@ async function renderVideo(configPath, outputPath) {
   return {
     success: true,
     path: outputPath,
-    durationSec: config.totalDurationSec,
-    fileSizeMB: Math.round(stats.size / 1024 / 1024 * 100) / 100,
+    mode: hasAnimated ? 'animated' : 'ken-burns',
+    durationSec: config.totalDurationSec + (config.endCard?.durationSec || 3),
+    fileSizeMB: Math.round((stats.size / 1024 / 1024) * 100) / 100,
     processingMs: Date.now() - startTime,
   }
 }
 
 /**
- * FFmpeg 降級方案：簡單圖片序列 + zoompan（Ken Burns）
+ * 動畫片段拼接方案：Veo 3 動畫 + xfade 轉場 + 片尾卡
  */
-async function renderWithFFmpeg(config, outputPath) {
+async function renderWithAnimatedClips(config, outputPath) {
+  const { panels, resolution, fps, endCard } = config
+  const { width, height } = resolution
+  const ffmpegPath = await getFFmpegPath()
+
+  const inputs = []
+  const filterParts = []
+  let prevLabel = ''
+
+  for (let i = 0; i < panels.length; i++) {
+    const panel = panels[i]
+
+    // 有動畫就用動畫，沒有就用 Ken Burns 降級
+    if (panel.animatedVideoPath && existsSync(panel.animatedVideoPath)) {
+      inputs.push('-i', panel.animatedVideoPath)
+    } else if (panel.imagePath && existsSync(panel.imagePath)) {
+      // 降級：靜態圖片 loop
+      inputs.push('-loop', '1', '-t', String(panel.durationSec), '-i', panel.imagePath)
+    } else {
+      throw new Error(`格 ${i + 1}：找不到動畫或圖片檔案`)
+    }
+
+    // 統一縮放到目標解析度，去音軌（音軌由 compose_final 處理）
+    filterParts.push(
+      `[${i}:v]scale=${width}:${height}:force_original_aspect_ratio=decrease,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=${fps},trim=duration=${panel.durationSec},setpts=PTS-STARTPTS[v${i}]`
+    )
+  }
+
+  // xfade 轉場：逐段串接
+  let currentLabel = '[v0]'
+  let offset = panels[0].durationSec
+
+  for (let i = 1; i < panels.length; i++) {
+    const transition = panels[i].transition || { type: 'fade', durationSec: 0.5 }
+    const xfadeType = mapTransitionToXfade(transition.type)
+    const duration = transition.durationSec || 0.5
+    const outLabel = `[xf${i}]`
+
+    filterParts.push(
+      `${currentLabel}[v${i}]xfade=transition=${xfadeType}:duration=${duration}:offset=${offset - duration}${outLabel}`
+    )
+
+    currentLabel = outLabel
+    offset += panels[i].durationSec - duration
+  }
+
+  // 片尾卡（黑底）
+  const endCardDuration = endCard?.durationSec || 3
+  const endCardIdx = panels.length
+  inputs.push(
+    '-f', 'lavfi', '-t', String(endCardDuration),
+    '-i', `color=c=${(endCard?.bgColor || '#1a1a2e').replace('#', '0x')}:s=${width}x${height}:r=${fps}`
+  )
+
+  // 片尾卡接在最後，用 fade 轉場
+  const endLabel = `[xfend]`
+  filterParts.push(
+    `${currentLabel}[${endCardIdx}:v]xfade=transition=fade:duration=1:offset=${offset - 1}${endLabel}`
+  )
+
+  const filterComplex = filterParts.join(';')
+
+  const args = [
+    ...inputs,
+    '-filter_complex', filterComplex,
+    '-map', endLabel,
+    '-c:v', 'libx264',
+    '-preset', 'fast',
+    '-crf', '23',
+    '-pix_fmt', 'yuv420p',
+    '-an', // 無音軌
+    '-y',
+    outputPath,
+  ]
+
+  await runFFmpeg(ffmpegPath, args)
+}
+
+/**
+ * Ken Burns 降級方案（與之前相同）
+ */
+async function renderWithFFmpegKenBurns(config, outputPath) {
   const { panels, resolution, fps, endCard } = config
   const { width, height } = resolution
 
-  // 建立 FFmpeg filter_complex
   const inputs = []
   const filterParts = []
   const concatInputs = []
@@ -91,7 +152,6 @@ async function renderWithFFmpeg(config, outputPath) {
   for (let i = 0; i < panels.length; i++) {
     const panel = panels[i]
     const imagePath = panel.imagePath
-
     if (!existsSync(imagePath)) {
       throw new Error(`圖片不存在：${imagePath}`)
     }
@@ -99,11 +159,8 @@ async function renderWithFFmpeg(config, outputPath) {
     const durationFrames = Math.round(panel.durationSec * fps)
     inputs.push('-loop', '1', '-t', String(panel.durationSec), '-i', imagePath)
 
-    // zoompan 模擬 Ken Burns
     const kb = panel.kenBurns || { startScale: 1, endScale: 1.1 }
-    const zoomStart = kb.startScale
-    const zoomEnd = kb.endScale
-    const zoomExpr = `${zoomStart}+(${zoomEnd}-${zoomStart})*on/${durationFrames}`
+    const zoomExpr = `${kb.startScale}+(${kb.endScale}-${kb.startScale})*on/${durationFrames}`
 
     filterParts.push(
       `[${i}:v]scale=${width * 2}:${height * 2},zoompan=z='${zoomExpr}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${durationFrames}:s=${width}x${height}:fps=${fps},trim=duration=${panel.durationSec},setpts=PTS-STARTPTS,setsar=1[v${i}]`
@@ -111,7 +168,6 @@ async function renderWithFFmpeg(config, outputPath) {
     concatInputs.push(`[v${i}]`)
   }
 
-  // 黑色片尾卡
   const endCardDuration = endCard?.durationSec || 3
   const endCardIdx = panels.length
   inputs.push(
@@ -138,29 +194,17 @@ async function renderWithFFmpeg(config, outputPath) {
     outputPath,
   ]
 
-  try {
-    await execFileAsync(ffmpegPath, args, { timeout: 300000, maxBuffer: 10 * 1024 * 1024 })
-  } catch (error) {
-    // FFmpeg 會把進度資訊寫到 stderr，導致 execFile 認為失敗
-    // 如果檔案存在且大小 > 0，視為成功
-    if (existsSync(outputPath) && statSync(outputPath).size > 0) {
-      return // 成功
-    }
-    throw error
-  }
+  await runFFmpeg(ffmpegPath, args)
 }
 
 /**
- * 最終合成：無聲影片 + TTS 音檔 + BGM → 最終影片
+ * 四層音軌合成：環境音（Veo 3）+ BGM + 旁白 TTS + 角色 TTS
  */
 async function composeFinal(videoPath, configPath, outputPath) {
   const startTime = Date.now()
 
   if (!existsSync(videoPath)) {
-    throw new Error(`無聲影片不存在：${videoPath}`)
-  }
-  if (!existsSync(configPath)) {
-    throw new Error(`video-config.json 不存在：${configPath}`)
+    throw new Error(`影片不存在：${videoPath}`)
   }
 
   const config = JSON.parse(readFileSync(configPath, 'utf-8'))
@@ -170,35 +214,30 @@ async function composeFinal(videoPath, configPath, outputPath) {
   }
 
   const ffmpegPath = await getFFmpegPath()
-
-  // 收集所有音軌
   const inputs = ['-i', videoPath]
   const audioFilters = []
+  const allLabels = []
   let inputIndex = 1
 
-  // TTS 音檔
+  // === Layer 1: Veo 3 環境音（從動畫影片抽取）===
   let panelStartSec = 0
   for (const panel of config.panels) {
-    if (panel.tts) {
-      for (const tts of panel.tts) {
-        const audioPath = tts.audioPath
-        if (audioPath && existsSync(audioPath)) {
-          inputs.push('-i', audioPath)
-          const delaySec = panelStartSec + (tts.delaySec || 0)
-          const delayMs = Math.round(delaySec * 1000)
-          audioFilters.push(
-            `[${inputIndex}:a]adelay=${delayMs}|${delayMs},volume=1.0[tts${inputIndex}]`
-          )
-          inputIndex++
-        }
-      }
+    const ambientVol = panel.ambientAudio?.volume ?? 0.15
+    if (ambientVol > 0 && panel.animatedVideoPath && existsSync(panel.animatedVideoPath)) {
+      inputs.push('-i', panel.animatedVideoPath)
+      const delayMs = Math.round(panelStartSec * 1000)
+      const label = `amb${inputIndex}`
+      audioFilters.push(
+        `[${inputIndex}:a]adelay=${delayMs}|${delayMs},volume=${ambientVol}[${label}]`
+      )
+      allLabels.push(`[${label}]`)
+      inputIndex++
     }
     panelStartSec += panel.durationSec
   }
 
-  // BGM
+  // === Layer 2: BGM ===
   const bgm = config.bgm
-  let bgmFilterLabel = ''
   if (bgm?.track && existsSync(bgm.track)) {
     inputs.push('-i', bgm.track)
     const bgmVolume = bgm.volume || 0.3
@@ -206,35 +245,49 @@ async function composeFinal(videoPath, configPath, outputPath) {
     const fadeOutSec = bgm.fadeOutSec || 2.0
     const totalDuration = config.totalDurationSec + (config.endCard?.durationSec || 3)
 
+    const label = `bgm`
     audioFilters.push(
-      `[${inputIndex}:a]aloop=loop=-1:size=2e+09,atrim=0:${totalDuration},afade=t=in:d=${fadeInSec},afade=t=out:st=${totalDuration - fadeOutSec}:d=${fadeOutSec},volume=${bgmVolume}[bgm]`
+      `[${inputIndex}:a]aloop=loop=-1:size=2e+09,atrim=0:${totalDuration},afade=t=in:d=${fadeInSec},afade=t=out:st=${totalDuration - fadeOutSec}:d=${fadeOutSec},volume=${bgmVolume}[${label}]`
     )
-    bgmFilterLabel = '[bgm]'
+    allLabels.push(`[${label}]`)
     inputIndex++
   }
 
-  // 混合所有音軌
-  if (audioFilters.length === 0) {
-    // 無音軌，直接複製
-    const args = [
-      ...inputs,
-      '-c', 'copy',
-      '-y',
-      outputPath,
-    ]
-    await execFileAsync(ffmpegPath, args, { timeout: 120000 })
+  // === Layer 3 & 4: TTS（旁白 + 角色對白/OS）===
+  panelStartSec = 0
+  for (const panel of config.panels) {
+    if (panel.tts) {
+      for (const tts of panel.tts) {
+        if (tts.audioPath && existsSync(tts.audioPath)) {
+          inputs.push('-i', tts.audioPath)
+          const delaySec = panelStartSec + (tts.delaySec || 0)
+          const delayMs = Math.round(delaySec * 1000)
+
+          // 根據 layer 設定音量
+          let volume = 1.0
+          if (tts.layer === 'narration') volume = 1.0
+          else if (tts.layer === 'dialogue') volume = 0.9
+          else if (tts.layer === 'character-os') volume = 0.85
+
+          const label = `tts${inputIndex}`
+          audioFilters.push(
+            `[${inputIndex}:a]adelay=${delayMs}|${delayMs},volume=${volume}[${label}]`
+          )
+          allLabels.push(`[${label}]`)
+          inputIndex++
+        }
+      }
+    }
+    panelStartSec += panel.durationSec
+  }
+
+  // === 混合所有音軌 ===
+  if (allLabels.length === 0) {
+    // 無任何音軌，直接複製影片
+    const args = ['-i', videoPath, '-c', 'copy', '-y', outputPath]
+    await runFFmpeg(ffmpegPath, args)
   } else {
-    const ttsLabels = audioFilters
-      .filter((_, i) => !audioFilters[i].includes('[bgm]'))
-      .map((f) => {
-        const match = f.match(/\[tts\d+\]/)
-        return match ? match[0] : ''
-      })
-      .filter(Boolean)
-
-    const allLabels = [...ttsLabels, bgmFilterLabel].filter(Boolean)
-    const mixFilter = `${allLabels.join('')}amix=inputs=${allLabels.length}:duration=longest[aout]`
-
+    const mixFilter = `${allLabels.join('')}amix=inputs=${allLabels.length}:duration=longest:normalize=0[aout]`
     const filterComplex = [...audioFilters, mixFilter].join(';')
 
     const args = [
@@ -249,7 +302,7 @@ async function composeFinal(videoPath, configPath, outputPath) {
       '-y',
       outputPath,
     ]
-    await execFileAsync(ffmpegPath, args, { timeout: 120000 })
+    await runFFmpeg(ffmpegPath, args)
   }
 
   const stats = statSync(outputPath)
@@ -258,22 +311,51 @@ async function composeFinal(videoPath, configPath, outputPath) {
   return {
     success: true,
     path: outputPath,
+    layers: {
+      ambient: allLabels.filter((l) => l.includes('amb')).length,
+      bgm: allLabels.filter((l) => l.includes('bgm')).length,
+      tts: allLabels.filter((l) => l.includes('tts')).length,
+    },
     durationSec: totalDurationSec,
-    fileSizeMB: Math.round(stats.size / 1024 / 1024 * 100) / 100,
+    fileSizeMB: Math.round((stats.size / 1024 / 1024) * 100) / 100,
     processingMs: Date.now() - startTime,
   }
 }
 
-/**
- * 取得 FFmpeg 路徑（優先系統安裝，備選 ffmpeg-static）
- */
+// === 工具函數 ===
+
+function mapTransitionToXfade(type) {
+  const map = {
+    'fade': 'fade',
+    'slide-left': 'slideleft',
+    'slide-up': 'slideup',
+    'zoom': 'smoothup',
+    'none': 'fade',
+  }
+  return map[type] || 'fade'
+}
+
+async function runFFmpeg(ffmpegPath, args) {
+  try {
+    await execFileAsync(ffmpegPath, args, {
+      timeout: 300000,
+      maxBuffer: 10 * 1024 * 1024,
+    })
+  } catch (error) {
+    // FFmpeg stderr 輸出不代表失敗
+    const outputPath = args[args.length - 1]
+    if (existsSync(outputPath) && statSync(outputPath).size > 0) {
+      return
+    }
+    throw error
+  }
+}
+
 async function getFFmpegPath() {
-  // 嘗試系統 ffmpeg
   try {
     await execFileAsync('which', ['ffmpeg'])
     return 'ffmpeg'
   } catch {
-    // 嘗試 ffmpeg-static
     try {
       const ffmpegStatic = await import('ffmpeg-static')
       return ffmpegStatic.default
@@ -283,7 +365,8 @@ async function getFFmpegPath() {
   }
 }
 
-// MCP JSON-RPC handler
+// === MCP JSON-RPC ===
+
 async function handleRequest(request) {
   const { method, params, id } = request
 
@@ -294,7 +377,7 @@ async function handleRequest(request) {
       result: {
         protocolVersion: '2024-11-05',
         capabilities: { tools: {} },
-        serverInfo: { name: 'video-compose', version: '1.0.0' },
+        serverInfo: { name: 'video-compose', version: '2.0.0' },
       },
     }
   }
@@ -311,17 +394,18 @@ async function handleRequest(request) {
         tools: [
           {
             name: 'render_video',
-            description: '將 video-config.json 渲染為無聲影片（MP4）。使用 Remotion 渲染 Ken Burns + 字幕 + 轉場動畫，若 Remotion 不可用則自動降級為 FFmpeg。',
+            description:
+              '拼接動畫片段（Veo 3）或靜態圖片（Ken Burns）為完整影片。支援 xfade 轉場和片尾卡。輸出為無音軌的 MP4。',
             inputSchema: {
               type: 'object',
               properties: {
                 configPath: {
                   type: 'string',
-                  description: 'video-config.json 的完整檔案路徑',
+                  description: 'video-config.json 的完整路徑',
                 },
                 outputPath: {
                   type: 'string',
-                  description: '輸出無聲影片的完整路徑（如 output/{slug}/{version}/video/raw.mp4）',
+                  description: '輸出影片的完整路徑',
                 },
               },
               required: ['configPath', 'outputPath'],
@@ -329,21 +413,22 @@ async function handleRequest(request) {
           },
           {
             name: 'compose_final',
-            description: '將無聲影片 + TTS 音檔 + BGM 混合為最終影片。根據 video-config.json 的時間軸對齊所有音軌。',
+            description:
+              '四層音軌合成：Veo 3 環境音（15%）+ BGM（30%）+ 旁白 TTS（100%）+ 角色 OS/對白 TTS（85-90%）。根據 video-config.json 的時間軸精確對齊。',
             inputSchema: {
               type: 'object',
               properties: {
                 videoPath: {
                   type: 'string',
-                  description: 'render_video 產出的無聲影片路徑',
+                  description: 'render_video 產出的影片路徑',
                 },
                 configPath: {
                   type: 'string',
-                  description: 'video-config.json 的完整路徑（含 TTS audioPath 和 BGM 資訊）',
+                  description: 'video-config.json 路徑',
                 },
                 outputPath: {
                   type: 'string',
-                  description: '最終影片輸出路徑（如 output/{slug}/{version}/video/final.mp4）',
+                  description: '最終影片輸出路徑',
                 },
               },
               required: ['videoPath', 'configPath', 'outputPath'],
@@ -363,9 +448,7 @@ async function handleRequest(request) {
         return {
           jsonrpc: '2.0',
           id,
-          result: {
-            content: [{ type: 'text', text: JSON.stringify(result) }],
-          },
+          result: { content: [{ type: 'text', text: JSON.stringify(result) }] },
         }
       } catch (error) {
         return {
@@ -385,9 +468,7 @@ async function handleRequest(request) {
         return {
           jsonrpc: '2.0',
           id,
-          result: {
-            content: [{ type: 'text', text: JSON.stringify(result) }],
-          },
+          result: { content: [{ type: 'text', text: JSON.stringify(result) }] },
         }
       } catch (error) {
         return {
@@ -409,20 +490,16 @@ async function handleRequest(request) {
   }
 }
 
-// stdio transport
 async function main() {
   let buffer = ''
-
   stdin.setEncoding('utf-8')
   stdin.on('data', async (chunk) => {
     buffer += chunk
     const lines = buffer.split('\n')
     buffer = lines.pop() || ''
-
     for (const line of lines) {
       const trimmed = line.trim()
       if (!trimmed) continue
-
       try {
         const request = JSON.parse(trimmed)
         const response = await handleRequest(request)
