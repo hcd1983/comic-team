@@ -58,7 +58,6 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
   const config = {
     aspectRatio: aspectRatio || '9:16',
     numberOfVideos: numberOfVideos || 1,
-    personGeneration: 'allow',
   }
 
   if (negativePrompt) {
@@ -91,7 +90,9 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
   const response = operation.response
   if (!response?.generatedVideos?.length) {
     const reasons = response?.raiMediaFilteredReasons?.join(', ') || '未知原因'
-    throw new Error(`影片生成失敗：${reasons}`)
+    const count = response?.raiMediaFilteredCount || 0
+    const debugInfo = JSON.stringify(response, null, 2)
+    throw new Error(`影片生成失敗（過濾 ${count} 個）：${reasons}\n回應詳情：${debugInfo}`)
   }
 
   // 儲存影片
@@ -106,8 +107,14 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
     const buffer = Buffer.from(video.video.videoBytes, 'base64')
     writeFileSync(outputPath, buffer)
   } else if (video.video?.uri) {
-    // 如果是 URI，需要下載
-    const res = await fetch(video.video.uri)
+    // URI 需要帶 API key 認證
+    const uri = video.video.uri.includes('?')
+      ? `${video.video.uri}&key=${apiKey}`
+      : `${video.video.uri}?key=${apiKey}`
+    const res = await fetch(uri)
+    if (!res.ok) {
+      throw new Error(`影片下載失敗（HTTP ${res.status}）：${await res.text()}`)
+    }
     const buffer = Buffer.from(await res.arrayBuffer())
     writeFileSync(outputPath, buffer)
   } else {
