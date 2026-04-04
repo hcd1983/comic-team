@@ -1,0 +1,145 @@
+{
+  "version": "1.0.0",
+  "presets": [
+    {
+      "id": "shonen-action",
+      "name": "少年熱血漫",
+      "ta": {
+        "ageRange": [13, 22],
+        "genres": ["熱血", "戰鬥", "友情"],
+        "tone": ["thrilling", "funny"],
+        "pacing": ["fast-paced", "epic"],
+        "contentRating": "pg13",
+        "culturalStyle": ["jp"]
+      },
+      "recommended": ["reader-01", "reader-04", "reader-09", "reader-10", "reader-15"],
+      "alternates": ["reader-13", "reader-02"]
+    },
+    {
+      "id": "shoujo-romance",
+      "name": "少女戀愛漫",
+      "ta": {
+        "ageRange": [14, 25],
+        "genres": ["戀愛", "校園", "日常"],
+        "tone": ["sweet", "healing"],
+        "pacing": ["slow-burn", "episodic"],
+        "contentRating": "all-ages",
+        "culturalStyle": ["jp", "kr"]
+      },
+      "recommended": ["reader-02", "reader-05", "reader-09", "reader-07", "reader-10"],
+      "alternates": ["reader-17", "reader-14"]
+    },
+    {
+      "id": "workplace-drama",
+      "name": "職場寫實劇",
+      "ta": {
+        "ageRange": [25, 45],
+        "genres": ["職場", "社會", "人際"],
+        "tone": ["funny", "angsty"],
+        "pacing": ["episodic", "slow-burn"],
+        "contentRating": "pg13",
+        "culturalStyle": ["jp", "tw"]
+      },
+      "recommended": ["reader-10", "reader-11", "reader-17", "reader-19", "reader-12"],
+      "alternates": ["reader-13", "reader-08"]
+    },
+    {
+      "id": "horror-thriller",
+      "name": "恐怖驚悚",
+      "ta": {
+        "ageRange": [18, 40],
+        "genres": ["恐怖", "驚悚", "心理"],
+        "tone": ["dark", "thrilling"],
+        "pacing": ["mystery", "fast-paced"],
+        "contentRating": "mature",
+        "culturalStyle": ["jp", "kr"]
+      },
+      "recommended": ["reader-03", "reader-06", "reader-08", "reader-11", "reader-16"],
+      "alternates": ["reader-19", "reader-04"]
+    },
+    {
+      "id": "all-ages-comedy",
+      "name": "全年齡喜劇",
+      "ta": {
+        "ageRange": [10, 65],
+        "genres": ["搞笑", "日常", "喜劇"],
+        "tone": ["funny", "healing"],
+        "pacing": ["episodic", "fast-paced"],
+        "contentRating": "all-ages",
+        "culturalStyle": ["mixed"]
+      },
+      "recommended": ["reader-10", "reader-04", "reader-01", "reader-17", "reader-18"],
+      "alternates": ["reader-13", "reader-02"]
+    },
+    {
+      "id": "bl-gl",
+      "name": "BL / GL",
+      "ta": {
+        "ageRange": [16, 35],
+        "genres": ["BL", "GL", "耽美", "戀愛"],
+        "tone": ["sweet", "angsty"],
+        "pacing": ["slow-burn", "epic"],
+        "contentRating": "mature",
+        "culturalStyle": ["jp", "kr"]
+      },
+      "recommended": ["reader-14", "reader-06", "reader-02", "reader-08", "reader-16"],
+      "alternates": ["reader-05", "reader-03"]
+    },
+    {
+      "id": "sci-fi-adventure",
+      "name": "科幻冒險",
+      "ta": {
+        "ageRange": [18, 50],
+        "genres": ["科幻", "冒險", "未來"],
+        "tone": ["thrilling", "dark"],
+        "pacing": ["epic", "fast-paced"],
+        "contentRating": "pg13",
+        "culturalStyle": ["jp", "western"]
+      },
+      "recommended": ["reader-03", "reader-15", "reader-11", "reader-20", "reader-08"],
+      "alternates": ["reader-01", "reader-04"]
+    },
+    {
+      "id": "slice-of-life",
+      "name": "日常治癒系",
+      "ta": {
+        "ageRange": [15, 55],
+        "genres": ["治癒", "日常", "美食", "動物"],
+        "tone": ["healing", "sweet"],
+        "pacing": ["slow-burn", "episodic"],
+        "contentRating": "all-ages",
+        "culturalStyle": ["jp", "tw"]
+      },
+      "recommended": ["reader-05", "reader-07", "reader-12", "reader-18", "reader-02"],
+      "alternates": ["reader-10", "reader-17"]
+    },
+    {
+      "id": "mystery-detective",
+      "name": "推理懸疑",
+      "ta": {
+        "ageRange": [20, 45],
+        "genres": ["推理", "懸疑", "犯罪"],
+        "tone": ["thrilling", "dark"],
+        "pacing": ["mystery", "fast-paced"],
+        "contentRating": "pg13",
+        "culturalStyle": ["jp", "western"]
+      },
+      "recommended": ["reader-11", "reader-08", "reader-03", "reader-19", "reader-06"],
+      "alternates": ["reader-10", "reader-04"]
+    },
+    {
+      "id": "historical-drama",
+      "name": "歷史人文劇",
+      "ta": {
+        "ageRange": [25, 65],
+        "genres": ["歷史", "戰爭", "人文", "傳記"],
+        "tone": ["thrilling", "healing"],
+        "pacing": ["epic", "slow-burn"],
+        "contentRating": "pg13",
+        "culturalStyle": ["jp", "tw"]
+      },
+      "recommended": ["reader-18", "reader-20", "reader-12", "reader-15", "reader-08"],
+      "alternates": ["reader-17", "reader-11"]
+    }
+  ]
+}

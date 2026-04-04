@@ -1,0 +1,417 @@
+{
+  "version": "1.0.0",
+  "dimensions": {
+    "ageGroup": ["teen", "young", "adult", "mature", "senior"],
+    "gender": ["M", "F", "NB"],
+    "experience": ["newbie", "casual", "regular", "veteran"],
+    "emotionPref": ["sweet", "angsty", "funny", "thrilling", "healing", "dark"],
+    "narrativePref": ["fast-paced", "slow-burn", "mystery", "episodic", "epic"],
+    "visualWeight": ["visual-first", "visual-lean", "balanced", "story-lean", "story-first"],
+    "socialType": ["silent", "reactor", "commenter", "reviewer", "evangelist"],
+    "contentTolerance": ["conservative", "moderate", "open", "anything-goes"],
+    "culturePref": ["jp", "kr", "tw", "western", "mixed"],
+    "spending": ["free-only", "selective", "subscriber", "collector"]
+  },
+  "readers": [
+    {
+      "id": "reader-01",
+      "name": "小炎",
+      "age": 16,
+      "gender": "M",
+      "occupation": "高中生",
+      "persona": "熱血笨蛋，看漫畫會跟著喊招式",
+      "tags": {
+        "ageGroup": "teen",
+        "experience": "casual",
+        "emotionPref": ["thrilling", "funny"],
+        "narrativePref": ["fast-paced", "epic"],
+        "visualWeight": "visual-lean",
+        "socialType": "reactor",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp"],
+        "spending": "free-only"
+      },
+      "genres": ["少年熱血", "運動競技", "奇幻冒險"]
+    },
+    {
+      "id": "reader-02",
+      "name": "泡芙",
+      "age": 17,
+      "gender": "F",
+      "occupation": "高中生",
+      "persona": "少女心爆棚的課堂塗鴉達人",
+      "tags": {
+        "ageGroup": "teen",
+        "experience": "casual",
+        "emotionPref": ["sweet", "healing"],
+        "narrativePref": ["slow-burn", "episodic"],
+        "visualWeight": "balanced",
+        "socialType": "evangelist",
+        "contentTolerance": "conservative",
+        "culturePref": ["jp", "kr"],
+        "spending": "selective"
+      },
+      "genres": ["少女戀愛", "校園日常", "偶像題材"]
+    },
+    {
+      "id": "reader-03",
+      "name": "墨子",
+      "age": 19,
+      "gender": "NB",
+      "occupation": "大學新生（哲學系）",
+      "persona": "安靜的哲學系怪咖，愛解讀隱喻",
+      "tags": {
+        "ageGroup": "teen",
+        "experience": "regular",
+        "emotionPref": ["dark", "angsty"],
+        "narrativePref": ["mystery", "slow-burn"],
+        "visualWeight": "story-first",
+        "socialType": "reviewer",
+        "contentTolerance": "open",
+        "culturePref": ["western", "mixed"],
+        "spending": "selective"
+      },
+      "genres": ["科幻哲思", "心理驚悚", "實驗漫畫"]
+    },
+    {
+      "id": "reader-04",
+      "name": "阿肥",
+      "age": 21,
+      "gender": "M",
+      "occupation": "大學生",
+      "persona": "宅到發光的資深漫畫百科全書",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "veteran",
+        "emotionPref": ["funny", "thrilling"],
+        "narrativePref": ["fast-paced", "episodic"],
+        "visualWeight": "balanced",
+        "socialType": "commenter",
+        "contentTolerance": "anything-goes",
+        "culturePref": ["jp"],
+        "spending": "collector"
+      },
+      "genres": ["少年熱血", "後宮喜劇", "異世界"]
+    },
+    {
+      "id": "reader-05",
+      "name": "棉花",
+      "age": 23,
+      "gender": "F",
+      "occupation": "幼教老師",
+      "persona": "溫柔到讓人融化的故事治癒師",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "casual",
+        "emotionPref": ["healing", "sweet"],
+        "narrativePref": ["slow-burn", "episodic"],
+        "visualWeight": "visual-lean",
+        "socialType": "evangelist",
+        "contentTolerance": "conservative",
+        "culturePref": ["jp", "tw"],
+        "spending": "selective"
+      },
+      "genres": ["日常治癒", "親情故事", "動物漫畫"]
+    },
+    {
+      "id": "reader-06",
+      "name": "刀哥",
+      "age": 25,
+      "gender": "M",
+      "occupation": "軟體工程師",
+      "persona": "嘴上說不虐心看不下去的抖M",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "regular",
+        "emotionPref": ["angsty", "dark"],
+        "narrativePref": ["epic", "mystery"],
+        "visualWeight": "story-lean",
+        "socialType": "commenter",
+        "contentTolerance": "open",
+        "culturePref": ["jp", "kr"],
+        "spending": "subscriber"
+      },
+      "genres": ["虐心戀愛", "末日生存", "黑暗奇幻"]
+    },
+    {
+      "id": "reader-07",
+      "name": "小鹿",
+      "age": 22,
+      "gender": "F",
+      "occupation": "自由插畫師",
+      "persona": "畫面狂魔，為一格神作截圖百張",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "regular",
+        "emotionPref": ["healing", "sweet"],
+        "narrativePref": ["slow-burn", "episodic"],
+        "visualWeight": "visual-first",
+        "socialType": "evangelist",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp", "kr"],
+        "spending": "subscriber"
+      },
+      "genres": ["美食漫畫", "風景系", "藝術題材"]
+    },
+    {
+      "id": "reader-08",
+      "name": "嵐嵐",
+      "age": 27,
+      "gender": "NB",
+      "occupation": "自由撰稿人",
+      "persona": "寫評論比原作字還多的分析狂",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "veteran",
+        "emotionPref": ["dark", "thrilling"],
+        "narrativePref": ["mystery", "epic"],
+        "visualWeight": "story-first",
+        "socialType": "reviewer",
+        "contentTolerance": "open",
+        "culturePref": ["mixed"],
+        "spending": "subscriber"
+      },
+      "genres": ["推理懸疑", "社會寫實", "紀實漫畫"]
+    },
+    {
+      "id": "reader-09",
+      "name": "虎爺",
+      "age": 29,
+      "gender": "M",
+      "occupation": "健身教練",
+      "persona": "粗獷外表下藏著少女漫的心",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "casual",
+        "emotionPref": ["sweet", "funny"],
+        "narrativePref": ["fast-paced", "episodic"],
+        "visualWeight": "visual-lean",
+        "socialType": "silent",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp"],
+        "spending": "free-only"
+      },
+      "genres": ["少女戀愛", "運動漫畫", "搞笑日常"]
+    },
+    {
+      "id": "reader-10",
+      "name": "蜜蜂",
+      "age": 31,
+      "gender": "F",
+      "occupation": "行銷企劃",
+      "persona": "什麼都看的漫畫雜食性動物",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "regular",
+        "emotionPref": ["funny", "sweet"],
+        "narrativePref": ["fast-paced", "episodic"],
+        "visualWeight": "balanced",
+        "socialType": "evangelist",
+        "contentTolerance": "open",
+        "culturePref": ["mixed"],
+        "spending": "subscriber"
+      },
+      "genres": ["職場喜劇", "戀愛喜劇", "美食漫畫"]
+    },
+    {
+      "id": "reader-11",
+      "name": "老K",
+      "age": 33,
+      "gender": "M",
+      "occupation": "律師",
+      "persona": "邏輯控，劇情有BUG秒抓出來",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "regular",
+        "emotionPref": ["thrilling", "dark"],
+        "narrativePref": ["mystery", "fast-paced"],
+        "visualWeight": "story-first",
+        "socialType": "reviewer",
+        "contentTolerance": "open",
+        "culturePref": ["jp", "western"],
+        "spending": "selective"
+      },
+      "genres": ["推理懸疑", "法律劇", "心理戰"]
+    },
+    {
+      "id": "reader-12",
+      "name": "霜霜",
+      "age": 35,
+      "gender": "F",
+      "occupation": "全職媽媽",
+      "persona": "孩子睡了就是漫畫時間的夜貓",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "veteran",
+        "emotionPref": ["healing", "angsty"],
+        "narrativePref": ["slow-burn", "epic"],
+        "visualWeight": "balanced",
+        "socialType": "reactor",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp", "tw"],
+        "spending": "selective"
+      },
+      "genres": ["親情故事", "歷史劇", "治癒系"]
+    },
+    {
+      "id": "reader-13",
+      "name": "阿南",
+      "age": 38,
+      "gender": "M",
+      "occupation": "計程車司機",
+      "persona": "等客人時配咖啡看手機漫畫",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "casual",
+        "emotionPref": ["funny", "thrilling"],
+        "narrativePref": ["fast-paced", "episodic"],
+        "visualWeight": "visual-lean",
+        "socialType": "silent",
+        "contentTolerance": "moderate",
+        "culturePref": ["tw", "jp"],
+        "spending": "free-only"
+      },
+      "genres": ["搞笑漫畫", "黑道劇", "運動漫畫"]
+    },
+    {
+      "id": "reader-14",
+      "name": "薇薇",
+      "age": 28,
+      "gender": "F",
+      "occupation": "BL同人作者",
+      "persona": "萬物皆可配對的腐系創作者",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "veteran",
+        "emotionPref": ["sweet", "angsty"],
+        "narrativePref": ["slow-burn", "epic"],
+        "visualWeight": "balanced",
+        "socialType": "evangelist",
+        "contentTolerance": "anything-goes",
+        "culturePref": ["jp", "kr"],
+        "spending": "collector"
+      },
+      "genres": ["BL", "GL", "耽美奇幻"]
+    },
+    {
+      "id": "reader-15",
+      "name": "拓海",
+      "age": 42,
+      "gender": "M",
+      "occupation": "餐廳老闆",
+      "persona": "只看經典老作品的復古派",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "veteran",
+        "emotionPref": ["thrilling", "funny"],
+        "narrativePref": ["epic", "fast-paced"],
+        "visualWeight": "visual-lean",
+        "socialType": "silent",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp"],
+        "spending": "collector"
+      },
+      "genres": ["經典少年漫", "機甲科幻", "武俠"]
+    },
+    {
+      "id": "reader-16",
+      "name": "小靈",
+      "age": 20,
+      "gender": "NB",
+      "occupation": "美術系學生",
+      "persona": "前衛審美的獨立漫畫愛好者",
+      "tags": {
+        "ageGroup": "young",
+        "experience": "regular",
+        "emotionPref": ["dark", "healing"],
+        "narrativePref": ["mystery", "slow-burn"],
+        "visualWeight": "visual-first",
+        "socialType": "reviewer",
+        "contentTolerance": "anything-goes",
+        "culturePref": ["western", "mixed"],
+        "spending": "selective"
+      },
+      "genres": ["獨立漫畫", "實驗敘事", "藝術漫畫"]
+    },
+    {
+      "id": "reader-17",
+      "name": "秋姐",
+      "age": 48,
+      "gender": "F",
+      "occupation": "公務員",
+      "persona": "上班摸魚偷看漫畫的資深公僕",
+      "tags": {
+        "ageGroup": "mature",
+        "experience": "regular",
+        "emotionPref": ["sweet", "funny"],
+        "narrativePref": ["episodic", "slow-burn"],
+        "visualWeight": "balanced",
+        "socialType": "reactor",
+        "contentTolerance": "conservative",
+        "culturePref": ["jp", "tw"],
+        "spending": "selective"
+      },
+      "genres": ["職場漫畫", "戀愛喜劇", "家庭劇"]
+    },
+    {
+      "id": "reader-18",
+      "name": "大熊",
+      "age": 55,
+      "gender": "M",
+      "occupation": "退休教師",
+      "persona": "用漫畫理解年輕人的慈祥長輩",
+      "tags": {
+        "ageGroup": "mature",
+        "experience": "veteran",
+        "emotionPref": ["healing", "funny"],
+        "narrativePref": ["slow-burn", "episodic"],
+        "visualWeight": "story-lean",
+        "socialType": "commenter",
+        "contentTolerance": "conservative",
+        "culturePref": ["jp", "tw"],
+        "spending": "selective"
+      },
+      "genres": ["歷史劇", "戰爭漫畫", "人文題材"]
+    },
+    {
+      "id": "reader-19",
+      "name": "月月",
+      "age": 40,
+      "gender": "F",
+      "occupation": "心理諮商師",
+      "persona": "總是在分析角色心理狀態的職業病",
+      "tags": {
+        "ageGroup": "adult",
+        "experience": "regular",
+        "emotionPref": ["angsty", "healing"],
+        "narrativePref": ["slow-burn", "mystery"],
+        "visualWeight": "story-first",
+        "socialType": "reviewer",
+        "contentTolerance": "open",
+        "culturePref": ["kr", "jp"],
+        "spending": "subscriber"
+      },
+      "genres": ["心理劇", "社會寫實", "人際關係"]
+    },
+    {
+      "id": "reader-20",
+      "name": "阿公",
+      "age": 63,
+      "gender": "M",
+      "occupation": "退休工程師",
+      "persona": "從手塚治虫看到現在的活化石",
+      "tags": {
+        "ageGroup": "senior",
+        "experience": "veteran",
+        "emotionPref": ["healing", "thrilling"],
+        "narrativePref": ["epic", "slow-burn"],
+        "visualWeight": "balanced",
+        "socialType": "commenter",
+        "contentTolerance": "moderate",
+        "culturePref": ["jp"],
+        "spending": "collector"
+      },
+      "genres": ["經典名作", "歷史劇", "科幻冒險"]
+    }
+  ]
+}
