@@ -30,13 +30,17 @@
 🎬 總時長：22 秒（+ 3 秒片尾）
 🎵 BGM：溫馨感人（warm）
 
-格 1（起）5.0s — fade 進場 → 緩慢推近
+格 1（起）5.0s — fade 進場
+  動畫：角色緩慢眨眼，肩膀微微呼吸起伏
   配音：旁白「...」
-格 2（承）5.0s — fade → 水平緩移
+格 2（承）5.0s — fade 轉場
+  動畫：角色微微歪頭，手指輕觸嘴角
   配音：角色A「...」
-格 3（轉）5.5s — zoom 轉場 → 微幅放大
+格 3（轉）5.5s — zoom 轉場
+  動畫：角色眼睛微睜，短暫驚訝表情
   配音：角色B「...」
-格 4（合）6.5s — fade → 緩慢推近 + 1.5s 結尾停留
+格 4（合）6.5s — fade 轉場
+  動畫：角色表情放空，緩慢眨眼
   配音：旁白「...」
 
 聲優分配：
@@ -48,7 +52,26 @@
 請選擇：確認 / 調整參數 / 重新企劃
 ```
 
-### 步驟 2：語音生成
+### 步驟 2：動畫生成（Veo 2）
+
+1. 根據 `video-config.json` 的 `panels[].animationPrompt`
+2. 逐格呼叫 `gemini-animate` MCP server 的 `gemini_animate` tool
+3. 傳入：圖片路徑 + animationPrompt + negativePrompt + aspectRatio "9:16"
+4. 動畫影片存放：`output/{slug}/{version}/video/panel{N}_animated.mp4`
+5. 每格約需 1-3 分鐘生成
+6. 將生成的影片路徑回寫到 `video-config.json` 的 `panels[].animatedVideoPath`
+7. 回報進度：
+
+```
+✓ 格 1 動畫完成：5.0 秒（耗時 92 秒）
+✓ 格 2 動畫完成：5.0 秒（耗時 85 秒）
+✓ 格 3 動畫完成：5.0 秒（耗時 110 秒）
+✓ 格 4 動畫完成：5.0 秒（耗時 78 秒）
+```
+
+若某格生成失敗（安全過濾等），自動降級為 Ken Burns 靜態效果。
+
+### 步驟 3：語音生成
 
 1. 根據 `video-config.json` 的 `voiceAssignments` 和 `panels[].tts`
 2. 逐句呼叫 `tts-generate` MCP server 的 `generate_speech` tool
@@ -68,20 +91,14 @@
 語音總長：8.7 秒 → 影片調整為 25 秒
 ```
 
-### 步驟 3：影片渲染
+### 步驟 4：影片拼接
 
 1. 呼叫 `video-compose` MCP server 的 `render_video` tool
-2. 傳入 `video-config.json` 路徑
-3. 產出無聲影片：`output/{slug}/{version}/video/raw.mp4`
-4. 回報：
+2. 使用動畫片段（`panels[].animatedVideoPath`）拼接為完整影片
+3. 加入轉場效果和片尾卡
+4. 產出無聲影片：`output/{slug}/{version}/video/raw.mp4`
 
-```
-✓ 影片渲染完成：25 秒 / 1080x1920 / 30fps
-  檔案：output/{slug}/{version}/video/raw.mp4（12.5 MB）
-  渲染耗時：45 秒
-```
-
-### 步驟 4：音軌合成
+### 步驟 5：音軌合成
 
 1. 呼叫 `video-compose` MCP server 的 `compose_final` tool
 2. 混合：無聲影片 + TTS 音檔 + BGM
@@ -94,7 +111,7 @@
   時長：28 秒（含 3 秒片尾）
 ```
 
-### 步驟 5：使用者審核
+### 步驟 6：使用者審核
 
 ```
 ═══ 影片生成完成 ═══

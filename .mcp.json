@@ -15,6 +15,14 @@
     "video-compose": {
       "command": "node",
       "args": ["scripts/video-compose.mjs"]
+    },
+    "gemini-animate": {
+      "command": "node",
+      "args": ["scripts/gemini-animate.mjs"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+        "VEO_MODEL": "${VEO_MODEL}"
+      }
     }
   }
 }
