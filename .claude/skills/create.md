@@ -4,6 +4,14 @@
 
 ## 流程
 
+### 步驟 0：作品管理
+
+1. 讀取 `output/manifest.json`，列出現有作品
+2. 詢問使用者：
+   - **新建作品** → 詢問作品標題，自動產生 slug（英文小寫+連字號），建立 `output/{slug}/v1/` 目錄
+   - **既有作品新版本** → 選擇作品，自動遞增版本號，建立 `output/{slug}/v{N}/` 目錄
+3. 後續所有產出均存放於 `output/{slug}/{version}/` 下
+
 ### 步驟 1：啟動
 
 1. 詢問使用者故事主題或大綱
@@ -18,11 +26,11 @@
 2. 小查透過 WebSearch 搜集四大類素材（熱門梗、經典橋段、社群討論、受眾吐槽點）
 3. 呈現素材包摘要（最值得利用的發現、避免清單、建議切角）
 4. 使用者選擇：確認 / 追加搜尋 / 重新搜尋 / 跳過
-5. 確認後儲存至 `output/material-pack.json`
+5. 確認後儲存至 `output/{slug}/{version}/material-pack.json`
 
 ```
 ═══ 階段完成：素材搜集 ═══
-素材包已儲存至 output/material-pack.json
+素材包已儲存至 output/{slug}/{version}/material-pack.json
 即將進入編劇討論，是否繼續？(繼續 / 暫停)
 ```
 
@@ -35,7 +43,7 @@
 3. 使用者選定方向（A/B/C 或混搭）
 4. **三人共同深化**：三位編劇依序針對選定方案補強細節
 5. **笑點測試**（搞笑類）：列出至少 3 個具體笑點場景，使用者評估
-6. 使用者確定方向後，整理成 story-outline.json 並儲存至 `output/story-outline.json`：
+6. 使用者確定方向後，整理成 story-outline.json 並儲存至 `output/{slug}/{version}/story-outline.json`：
 
 ```json
 {
@@ -80,13 +88,13 @@
 
 ```
 ═══ 階段完成：編劇討論 ═══
-故事大綱已儲存至 output/story-outline.json
+故事大綱已儲存至 output/{slug}/{version}/story-outline.json
 即將進入分鏡階段，是否繼續？(繼續 / 回退討論 / 暫停)
 ```
 
 ### 步驟 2.5：角色設定圖
 
-1. 讀取 `output/story-outline.json` 的 `characters` 陣列
+1. 讀取 `output/{slug}/{version}/story-outline.json` 的 `characters` 陣列
 2. 為每個角色呼叫 `gemini_draw` 生成設定圖：
    - 正面全身圖（aspectRatio: 3:4, imageSize: 2K）
    - 每個表情獨立一張（aspectRatio: 1:1, referenceImages: 正面全身圖）
@@ -123,7 +131,7 @@
 
 3. **逐格審核**：每格顯示後使用者可選 確認 / 微調 / 跳過
 4. 所有格審核完畢後，最終確認：
-   - **全部確認** → 儲存至 `output/storyboard.json`，進入步驟 4
+   - **全部確認** → 儲存至 `output/{slug}/{version}/storyboard.json`，進入步驟 4
    - **修改後重新生成** → 使用者提供修改意見，連同上一版分鏡一起傳給分鏡師重新生成
    - **重新生成** → 直接重新生成
    - **回退到討論** → 回到步驟 2
@@ -132,19 +140,19 @@
 
 ```
 ═══ 階段完成：分鏡生成 ═══
-分鏡腳本已儲存至 output/storyboard.json
+分鏡腳本已儲存至 output/{slug}/{version}/storyboard.json
 即將進入作畫階段，是否繼續？(繼續 / 回退分鏡 / 暫停)
 ```
 
 ### 步驟 4：作畫生成
 
-1. 讀取 `output/storyboard.json`
+1. 讀取 `output/{slug}/{version}/storyboard.json`
 2. 逐格呼叫 `gemini_draw` MCP tool 生成圖片：
    - prompt：精簡 150-200 字（畫風 + 角色外觀 tag + 動作表情 + 場景關鍵元素）
    - `aspectRatio`：從分鏡取得（如 16:9, 3:4, 9:16）
    - `imageSize`：從分鏡取得（預設 2K）
    - `referenceImages`：角色設定圖路徑（每格都傳，維持角色一致性）
-   - 輸出路徑：`output/page{頁碼}_panel{格號}.png`
+   - 輸出路徑：`output/{slug}/{version}/pages/p{頁碼}_panel{格號}.png`
    - 每格完成後立即回報：`✓ 第 N 格完成：output/page1_panelN.png`
    - 每格生成後執行品質閘門檢查（圖文一致性、跨格一致性、文字殘留、構圖比例）
    - FAIL 自動修改 prompt 重新生成（最多 2 次）
@@ -153,10 +161,10 @@
 
 ```
 ═══ 作畫完成 ═══
-✓ 第 1 格：output/page1_panel1.png
-✓ 第 2 格：output/page1_panel2.png
+✓ 第 1 格：output/{slug}/{version}/pages/p1_panel1.png
+✓ 第 2 格：output/{slug}/{version}/pages/p1_panel2.png
 ✗ 第 3 格：生成失敗（內容安全過濾）
-✓ 第 4 格：output/page1_panel4.png
+✓ 第 4 格：output/{slug}/{version}/pages/p1_panel4.png
 ```
 
 4. 請使用者選擇：
@@ -167,7 +175,8 @@
 
 ### 步驟 5：完成
 
-1. 儲存流程指標至 `output/metrics.json`：
+1. 更新 `output/manifest.json`（新增版本記錄）
+2. 儲存流程指標至 `output/{slug}/{version}/metrics.json`：
 
 ```json
 {
@@ -191,15 +200,11 @@
 
 ```
 ═══ 漫畫創作完成！ ═══
-故事大綱：output/story-outline.json
-素材包：  output/material-pack.json
-角色設定：output/characters/
-分鏡腳本：output/storyboard.json
-漫畫圖片：
-  - output/page1_panel1.png
-  - output/page1_panel2.png
-  - output/page1_panel3.png
-  - output/page1_panel4.png
-後製文字：output/dialogue-overlay.json
-流程指標：output/metrics.json
+故事大綱：output/{slug}/{version}/story-outline.json
+素材包：  output/{slug}/{version}/material-pack.json
+角色設定：output/{slug}/{version}/characters/
+分鏡腳本：output/{slug}/{version}/storyboard.json
+漫畫圖片：output/{slug}/{version}/pages/
+後製文字：output/{slug}/{version}/dialogue-overlay.json
+流程指標：output/{slug}/{version}/metrics.json
 ```
