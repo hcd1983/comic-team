@@ -1,0 +1,56 @@
+{
+  "title": "聽到了",
+  "format": "short-video",
+  "resolution": { "width": 720, "height": 1280 },
+  "fps": 24,
+  "totalDurationSec": 28,
+  "bgm": { "category": "funny", "track": "", "volume": 0.3, "fadeInSec": 1.0, "fadeOutSec": 2.0 },
+  "panels": [
+    {
+      "panelNumber": 1,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/pages/page1_panel1.png",
+      "durationSec": 7.0,
+      "transition": { "type": "fade", "durationSec": 0.5 },
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/video/panel1_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [],
+      "kenBurns": { "startScale": 1.0, "endScale": 1.1, "startPosition": {"x":0.5,"y":0.5}, "endPosition": {"x":0.5,"y":0.5}, "easing": "easeInOut" }
+    },
+    {
+      "panelNumber": 2,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/pages/page1_panel2.png",
+      "durationSec": 7.0,
+      "transition": { "type": "fade", "durationSec": 0.5 },
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/video/panel2_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [],
+      "kenBurns": { "startScale": 1.0, "endScale": 1.1, "startPosition": {"x":0.5,"y":0.5}, "endPosition": {"x":0.5,"y":0.5}, "easing": "easeInOut" }
+    },
+    {
+      "panelNumber": 3,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/pages/page1_panel3.png",
+      "durationSec": 7.0,
+      "transition": { "type": "fade", "durationSec": 0.8 },
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/video/panel3_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [],
+      "kenBurns": { "startScale": 1.0, "endScale": 1.05, "startPosition": {"x":0.5,"y":0.5}, "endPosition": {"x":0.5,"y":0.5}, "easing": "easeInOut" }
+    },
+    {
+      "panelNumber": 4,
+      "imagePath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/pages/page1_panel4.png",
+      "durationSec": 7.0,
+      "transition": { "type": "fade", "durationSec": 1.0 },
+      "animatedVideoPath": "/Users/deanhuang/Desktop/hcd-projects/comic-team/output/hamster-cat/v1/video/panel4_animated.mp4",
+      "ambientAudio": { "source": "veo3", "volume": 0.15 },
+      "tts": [],
+      "kenBurns": { "startScale": 1.0, "endScale": 1.1, "startPosition": {"x":0.5,"y":0.5}, "endPosition": {"x":0.5,"y":0.5}, "easing": "easeInOut" }
+    }
+  ],
+  "endCard": {
+    "durationSec": 3.0,
+    "text": "聽到了",
+    "subtext": "",
+    "bgColor": "#f5f0e8"
+  }
+}

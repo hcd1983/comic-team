@@ -1,0 +1,79 @@
+{
+  "title": "聽到了",
+  "format": "four-panel",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "panels": [
+        {
+          "panelNumber": 1,
+          "description": "室內極簡場景，暖白色牆壁和地板，自然光從左側漫射。倉鼠站在畫面中央偏左，身體前傾 45 度，雙手高舉捧著一顆誇張偏大、閃閃發亮的葵花子，眼睛畫成星形，嘴巴大 O 型張開；貓坐在畫面右側，眼睛橢圓半閉，嘴巴一條橫線，表情平靜。兩個角色視線應在同一水平線上。",
+          "dialogue": "",
+          "cameraAngle": "中景",
+          "emotion": "興奮、期待",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "minimalist cute comic style, simple bold black outlines, flat colors, chibi-like proportions, very simple background, no detailed shading, similar to Crayon Shin-chan Buriburizaemon style, animal characters not humans, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "medium shot, 3:4 vertical panel, two characters side by side",
+            "scene": "minimalist indoor room, warm white walls and floor, soft natural light from left side, single plain wall with baseboard, empty and uncluttered",
+            "characters": "LEFT: hamster, round chubby body with stubby limbs, large pouchy cheeks, small round ears on top of head, warm brown fur with cream belly; excited expression with star-shaped shining eyes and wide O-shaped open mouth, body leaning forward 45 degrees, both small arms raised high holding an oversized glowing sunflower seed; RIGHT: cat, slightly elongated slender chibi body, triangular ears, cream white fur, pink triangle nose; default expression with half-closed oval eyes and flat line mouth, sitting calmly",
+            "mood": "cheerful contrast, one very excited one totally calm"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 2,
+          "description": "同一場景，視角稍微拉近。倉鼠腮幫子已鼓成誇張的圓球（塞滿葵花子），眼睛閉成開心弧形，嘴唇微開仍在說話，一隻手指向天花板、另一隻手指向地板，姿勢誇張投入；貓依然坐在右側，表情毫無變化，眼睛半閉。背景維持暖白極簡。",
+          "dialogue": "",
+          "cameraAngle": "中景",
+          "emotion": "滑稽、荒謬",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "minimalist cute comic style, simple bold black outlines, flat colors, chibi-like proportions, very simple background, no detailed shading, similar to Crayon Shin-chan Buriburizaemon style, animal characters not humans, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "medium shot, 3:4 vertical panel, two characters, slightly closer than panel 1",
+            "scene": "minimalist indoor room, warm white walls and floor, soft natural light from left side, single plain wall with baseboard, empty and uncluttered",
+            "characters": "LEFT: hamster, round chubby body, warm brown fur, cream belly; cheeks puffed out to enormous round balls (stuffed with seeds), eyes closed in happy curved arcs, mouth slightly open while still talking, one stubby arm pointing straight up and other pointing straight down in exaggerated enthusiastic gesture; RIGHT: cat, slightly elongated chibi body, cream white fur, triangular ears, pink triangle nose; completely unchanged half-closed oval eyes and flat line mouth expression, sitting still",
+            "mood": "absurd visual comedy, talking with stuffed cheeks while gesturing wildly"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 3,
+          "description": "切換成貓的特寫。畫面以貓為主體佔據整格，眼睛橢圓半閉且眼神漂移向右上角，完全不聚焦，彷彿盯著空氣看；尾巴在畫面右下角呈 S 型懶洋洋地搖動；周圍大量留白強調這個空間只有貓和虛空；背景為暖白牆壁。倉鼠不出現在這格。",
+          "dialogue": "",
+          "cameraAngle": "特寫",
+          "emotion": "漠然、心不在焉",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "minimalist cute comic style, simple bold black outlines, flat colors, chibi-like proportions, very simple background, no detailed shading, similar to Crayon Shin-chan Buriburizaemon style, animal characters not humans, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "close-up shot, 3:4 vertical panel, single character centered with lots of negative space",
+            "scene": "minimalist indoor room, warm white wall as background, very simple, maximum negative white space around character",
+            "characters": "cat only, slightly elongated chibi body, cream white fur, triangular ears, pink triangle nose; bored expression with half-closed oval eyes drifting toward upper right corner of frame, eyes unfocused as if staring at nothing, S-shaped tail curling lazily at bottom right corner of panel",
+            "mood": "zoned out, absent-minded, maximum blankness"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        },
+        {
+          "panelNumber": 4,
+          "description": "回到雙角色中景，兩者並排。倉鼠正面朝向貓，眼睛從星形恢復成受衝擊的正圓形，嘴角變成「<」字型（洩氣委屈），身體姿勢縮小了一點；貓側面，表情完全沒有改變，嘴型只微開一條縫說話，眼睛仍半閉且沒有轉向倉鼠，繼續望著別處。說完後貓的視線依然沒有回到倉鼠身上。",
+          "dialogue": "倉鼠：你有在聽嗎？\n貓：聽到了。葵花子。很棒。",
+          "cameraAngle": "中景",
+          "emotion": "反轉、乾笑",
+          "layoutHint": "標準",
+          "promptTemplate": {
+            "stylePrefix": "minimalist cute comic style, simple bold black outlines, flat colors, chibi-like proportions, very simple background, no detailed shading, similar to Crayon Shin-chan Buriburizaemon style, animal characters not humans, no text, no speech bubbles, no dialogue, no words, no letters, no sound effects",
+            "composition": "medium shot, 3:4 vertical panel, two characters side by side facing each other",
+            "scene": "minimalist indoor room, warm white walls and floor, soft natural light from left side, single plain wall with baseboard, empty and uncluttered",
+            "characters": "LEFT: hamster, round chubby body, warm brown fur, cream belly, cheeks slightly deflated; deflated hurt expression with wide round eyes (shock) and downturned angle-bracket mouth, body posture slightly smaller and slouched, facing right toward cat; RIGHT: cat, slightly elongated chibi body, cream white fur, triangular ears, pink triangle nose; completely deadpan expression, half-closed eyes still not looking at hamster, gaze directed away, mouth barely open in thin line as if speaking, no facial muscle movement at all",
+            "mood": "punchline delivered, one character deflated one character completely unmoved"
+          },
+          "aspectRatio": "3:4",
+          "imageSize": "2K"
+        }
+      ]
+    }
+  ]
+}
