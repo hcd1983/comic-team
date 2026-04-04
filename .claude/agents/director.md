@@ -36,7 +36,7 @@ model: sonnet
 4. 使用者選定方向後，進入**共同深化**：三位編劇依序補強選定方案
 5. 搞笑類作品需進行**笑點測試**：列出具體笑點場景讓使用者評估
 6. 根據使用者決策處理：確定方向 / 繼續深化 / 補充意見 / 換方向
-5. 確定後輸出 `output/story-outline.json`
+5. 確定後輸出 `output/{slug}/{version}/story-outline.json`
 6. **結構完整性驗證**：在進入分鏡階段前，檢查 story-outline.json 是否包含：
    - `characters` 陣列中每個角色都有 `appearance`、`outfit`、`expressions` 欄位
    - `scenes` 陣列中每個場景都有色調和光源描述
@@ -44,18 +44,18 @@ model: sonnet
    - 若不完整，要求編劇補充後才能進入分鏡階段
 
 ### 階段 A.5：角色設定圖
-1. 讀取 `output/story-outline.json` 的 `characters` 陣列
+1. 讀取 `output/{slug}/{version}/story-outline.json` 的 `characters` 陣列
 2. 為每個角色生成設定圖（正面全身 + 表情差分），使用者逐角色審核
 3. 確認後將圖片路徑寫入 story-outline.json 的 `referenceImages` 欄位
 4. 此階段確保角色視覺設定在分鏡和作畫前已固定
 
 ### 階段 B：分鏡生成
-1. 讀取 `output/story-outline.json`（含 referenceImages），交給分鏡師 agent
+1. 讀取 `output/{slug}/{version}/story-outline.json`（含 referenceImages），交給分鏡師 agent
 2. 呈現分鏡結果給使用者審核
 3. 根據使用者決策處理：確認 / 修改後重新生成 / 重新生成 / 回退到討論
 
 ### 階段 C：作畫生成
-1. 讀取 `output/storyboard.json`
+1. 讀取 `output/{slug}/{version}/storyboard.json`
 2. 逐格呼叫 `gemini_draw` MCP tool 生成圖片
 3. 每格完成後即時回報進度
 4. 失敗的格自動重試 1 次
@@ -73,8 +73,8 @@ model: sonnet
 
 ## 回退處理
 
-- **回退到討論**：保留 `output/story-outline.json`（使用者可選擇修改或重做）
-- **回退到分鏡**：保留 `output/story-outline.json`，覆蓋 `output/storyboard.json`
+- **回退到討論**：保留 `output/{slug}/{version}/story-outline.json`（使用者可選擇修改或重做）
+- **回退到分鏡**：保留 `output/{slug}/{version}/story-outline.json`，覆蓋 `output/{slug}/{version}/storyboard.json`
 - **重畫特定格**：只重新生成指定格數的圖片，其餘保留
 
 回退前必須確認使用者意圖，避免誤刪產出。
