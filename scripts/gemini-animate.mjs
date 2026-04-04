@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'fs
 import { dirname, extname } from 'path'
 import { stdin, stdout } from 'process'
 
-const VEO_MODEL = process.env.VEO_MODEL || 'veo-2.0-generate-001'
+const VEO_MODEL = process.env.VEO_MODEL || 'veo-3.0-generate-001'
 const POLL_INTERVAL_MS = 10000 // 10 秒輪詢一次
 const MAX_POLL_ATTEMPTS = 60   // 最多等 10 分鐘
 
@@ -52,12 +52,18 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
   const mimeType = MIME_TYPES[ext] || 'image/png'
   const imageBytes = readFileSync(imagePath).toString('base64')
 
-  const { aspectRatio, numberOfVideos, negativePrompt } = options
+  const { aspectRatio, numberOfVideos, negativePrompt, generateAudio } = options
 
   // 建立生成配置
   const config = {
     aspectRatio: aspectRatio || '9:16',
     numberOfVideos: numberOfVideos || 1,
+  }
+
+  // Veo 3 原生音訊（Gemini API 目前不支援，僅 Vertex AI 可用）
+  // 設為 true 時嘗試啟用，若 API 不支援會自動降級為無聲
+  if (generateAudio === true) {
+    config.generateAudio = true
   }
 
   if (negativePrompt) {
@@ -186,6 +192,10 @@ async function handleRequest(request) {
                   type: 'string',
                   description: '負面提示詞，描述不想要的效果（如 "realistic style change, large movements, morphing"）',
                 },
+                generateAudio: {
+                  type: 'boolean',
+                  description: '是否生成原生音訊（Veo 3 支援，預設 true）。設為 false 則只生成無聲影片。',
+                },
               },
               required: ['imagePath', 'prompt', 'outputPath'],
             },
@@ -207,6 +217,7 @@ async function handleRequest(request) {
           {
             aspectRatio: args.aspectRatio,
             negativePrompt: args.negativePrompt,
+            generateAudio: args.generateAudio,
           }
         )
         return {
