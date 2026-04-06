@@ -32,7 +32,21 @@ function sleep(ms) {
 }
 
 /**
+ * 讀取圖片為 { imageBytes, mimeType } 物件
+ */
+function readImage(filePath) {
+  if (!existsSync(filePath)) {
+    throw new Error(`圖片不存在：${filePath}`)
+  }
+  const ext = extname(filePath).toLowerCase()
+  const mimeType = MIME_TYPES[ext] || 'image/png'
+  const imageBytes = readFileSync(filePath).toString('base64')
+  return { imageBytes, mimeType }
+}
+
+/**
  * 將靜態圖片轉為動畫影片
+ * 支援單圖模式（image）與多圖參考模式（referenceImages）
  */
 async function animateImage(imagePath, prompt, outputPath, options = {}) {
   const startTime = Date.now()
@@ -41,18 +55,9 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
     throw new Error('GEMINI_API_KEY 環境變數未設定')
   }
 
-  if (!existsSync(imagePath)) {
-    throw new Error(`圖片不存在：${imagePath}`)
-  }
-
   const ai = new GoogleGenAI({ apiKey })
 
-  // 讀取圖片為 base64
-  const ext = extname(imagePath).toLowerCase()
-  const mimeType = MIME_TYPES[ext] || 'image/png'
-  const imageBytes = readFileSync(imagePath).toString('base64')
-
-  const { aspectRatio, numberOfVideos, negativePrompt, generateAudio } = options
+  const { aspectRatio, numberOfVideos, negativePrompt, referenceImages } = options
 
   // 建立生成配置
   const config = {
@@ -60,26 +65,44 @@ async function animateImage(imagePath, prompt, outputPath, options = {}) {
     numberOfVideos: numberOfVideos || 1,
   }
 
-  // Veo 3 原生音訊（Gemini API 目前不支援，僅 Vertex AI 可用）
-  // 設為 true 時嘗試啟用，若 API 不支援會自動降級為無聲
-  if (generateAudio === true) {
-    config.generateAudio = true
-  }
-
   if (negativePrompt) {
     config.negativePrompt = negativePrompt
   }
 
-  // 發送非同步生成請求
-  let operation = await ai.models.generateVideos({
+  // 建立 generateVideos 參數
+  const generateParams = {
     model: VEO_MODEL,
     prompt,
-    image: {
-      imageBytes,
-      mimeType,
-    },
     config,
-  })
+  }
+
+  if (referenceImages && referenceImages.length > 0) {
+    // 多圖參考模式：referenceImages（最多 3 張 asset + 1 張 style）
+    // 注意：referenceImages 與 image 互斥，不能同時使用
+    config.referenceImages = referenceImages.map((ref) => {
+      const img = readImage(ref.imagePath)
+      return {
+        image: {
+          imageBytes: img.imageBytes,
+          mimeType: img.mimeType,
+        },
+        referenceType: ref.referenceType || 'REFERENCE_TYPE_ASSET',
+      }
+    })
+  } else {
+    // 單圖模式：傳統 image-to-video
+    if (!existsSync(imagePath)) {
+      throw new Error(`圖片不存在：${imagePath}`)
+    }
+    const img = readImage(imagePath)
+    generateParams.image = {
+      imageBytes: img.imageBytes,
+      mimeType: img.mimeType,
+    }
+  }
+
+  // 發送非同步生成請求
+  let operation = await ai.models.generateVideos(generateParams)
 
   // 輪詢等待完成
   let attempts = 0
@@ -167,18 +190,17 @@ async function handleRequest(request) {
           {
             name: 'gemini_animate',
             description:
-              '使用 Google Veo 2 API 將靜態漫畫圖片轉為動畫影片。支援 image-to-video，可透過 prompt 描述角色動作（如眨眼、微笑、轉頭）。生成為非同步操作，約需 1-3 分鐘。',
+              '使用 Google Veo API 將靜態圖片轉為動畫影片。支援單圖 image-to-video 與多圖 referenceImages 模式（最多 3 張 asset 參考圖）。生成為非同步操作，約需 1-3 分鐘。',
             inputSchema: {
               type: 'object',
               properties: {
                 imagePath: {
                   type: 'string',
-                  description: '輸入圖片的完整檔案路徑（漫畫格圖片）',
+                  description: '輸入圖片的完整檔案路徑（單圖模式使用，與 referenceImages 互斥）',
                 },
                 prompt: {
                   type: 'string',
-                  description:
-                    '動畫描述 prompt（英文）。描述角色的動作，如 "The character slowly blinks and slightly tilts head with a gentle smile"。保持動作幅度小，避免大幅度移動。',
+                  description: '動畫描述 prompt（英文）。描述動作與場景。',
                 },
                 outputPath: {
                   type: 'string',
@@ -190,14 +212,29 @@ async function handleRequest(request) {
                 },
                 negativePrompt: {
                   type: 'string',
-                  description: '負面提示詞，描述不想要的效果（如 "realistic style change, large movements, morphing"）',
+                  description: '負面提示詞，描述不想要的效果',
                 },
-                generateAudio: {
-                  type: 'boolean',
-                  description: '是否生成原生音訊（Veo 3 支援，預設 true）。設為 false 則只生成無聲影片。',
+                referenceImages: {
+                  type: 'array',
+                  description: '多圖參考模式（與 imagePath 互斥）。最多 3 張 asset 圖。傳入後會使用 referenceImages API 而非單圖 image-to-video。',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      imagePath: {
+                        type: 'string',
+                        description: '參考圖片的完整檔案路徑',
+                      },
+                      referenceType: {
+                        type: 'string',
+                        description: '參考類型：REFERENCE_TYPE_ASSET（保持主體外觀）或 REFERENCE_TYPE_STYLE（風格參考，僅 Veo 2）',
+                        enum: ['REFERENCE_TYPE_ASSET', 'REFERENCE_TYPE_STYLE'],
+                      },
+                    },
+                    required: ['imagePath'],
+                  },
                 },
               },
-              required: ['imagePath', 'prompt', 'outputPath'],
+              required: ['prompt', 'outputPath'],
             },
           },
         ],
@@ -217,7 +254,7 @@ async function handleRequest(request) {
           {
             aspectRatio: args.aspectRatio,
             negativePrompt: args.negativePrompt,
-            generateAudio: args.generateAudio,
+            referenceImages: args.referenceImages,
           }
         )
         return {

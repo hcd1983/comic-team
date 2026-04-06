@@ -31,6 +31,166 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "grandma-phone",
+      "title": "手機教室，第三期開班中",
+      "format": "four-panel",
+      "style": "warm cute manga, soft pastel tones",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-04",
+          "status": "storyboard-complete",
+          "episodes": [
+            { "episode": 1, "title": "手機教室，第三期開班中" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hamster-cat",
+      "title": "聽到了",
+      "format": "four-panel",
+      "style": "minimalist cute, simple bold outlines, chibi proportions, similar to Buriburizaemon from Crayon Shin-chan",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-04",
+          "status": "storyboard-complete",
+          "episodes": [
+            { "episode": 1, "title": "聽到了" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "read-receipt",
+      "title": "已讀",
+      "format": "single-page",
+      "style": "都市寫實職場風，冷白色調，表情細膩",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "已讀" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "last-capsule",
+      "title": "最後一顆",
+      "format": "single-page",
+      "style": "電影感分鏡，冷灰藍色調，無對白純視覺敘事",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "最後一顆" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "just-like-that",
+      "title": "先這樣",
+      "format": "single-page",
+      "style": "職場寫實風，時間流逝天色變化，荒謬諷刺",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "先這樣" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "practice-passion",
+      "title": "練習熱情",
+      "format": "single-page",
+      "style": "冷白浴室寫實風，單一場景，自嘲黑色幽默",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "練習熱情" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "twelve-minutes",
+      "title": "十二分鐘",
+      "format": "single-page",
+      "style": "辦公室寫實風，午休昏暗燈光，苦澀喜劇",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "十二分鐘" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "worthy-praise",
+      "title": "耐操",
+      "format": "single-page",
+      "style": "職場寫實風，上下分割構圖，手機備忘錄為核心道具",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "耐操" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "overtime-trap",
+      "title": "球賽，等我",
+      "format": "single-page",
+      "style": "傍晚辦公室寫實風，時鐘節拍器，瞳孔特寫電影感",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "球賽，等我" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "no-apology-boss",
+      "title": "在等熱水",
+      "format": "single-page",
+      "style": "冷灰茶水間寫實風，飲水機為道具，表情切換核心",
+      "versions": [
+        {
+          "version": "v1",
+          "createdAt": "2026-04-05",
+          "status": "story-complete",
+          "episodes": [
+            { "episode": 1, "title": "在等熱水" }
+          ]
+        }
+      ]
     }
   ],
   "legacy": {
